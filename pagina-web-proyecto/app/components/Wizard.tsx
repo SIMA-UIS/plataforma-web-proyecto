@@ -242,7 +242,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
       courseData.momentStatus = momentStatus;
 
       const response = await fetch(
-        `http://localhost:8081/api/courses/${courseData.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseData.id}`,
         {
           method: "PUT",
           headers: {
@@ -319,7 +319,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
         const token = Cookies.get("token");
         const filename = previousUrl.split("/media/files/")[1];
 
-        await fetch(`http://localhost:8081/media/files/${filename}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/files/${filename}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -340,7 +340,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
     const token = Cookies.get("token");
 
     try {
-      const response = await fetch("http://localhost:8081/media/upload", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -354,7 +354,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
       }
 
       const result = await response.json(); // { url: "/media/files/nombre.jpg" }
-      return `http://localhost:8081${result.url}`;
+      return `${process.env.NEXT_PUBLIC_API_URL}${result.url}`;
     } catch (error) {
       console.error("Error subiendo imagen:", error);
       return null;
