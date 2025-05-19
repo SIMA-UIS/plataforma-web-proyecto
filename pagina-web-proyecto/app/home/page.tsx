@@ -40,7 +40,7 @@ const Dashboard = () => {
           throw new Error("No token found");
         }
 
-        const response = await fetch("https://sima.uis.edu.co/api/courses", {
+        const response = await fetch("http://localhost:8081/api/courses", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

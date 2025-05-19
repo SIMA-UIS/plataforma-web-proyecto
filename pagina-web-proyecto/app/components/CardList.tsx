@@ -78,7 +78,7 @@ export default function CardList({
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}`,
+        `http://localhost:8081/api/courses/${courseId}`,
         {
           method: "PUT",
           headers: {

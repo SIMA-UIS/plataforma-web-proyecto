@@ -42,7 +42,7 @@ export default function SubirContenido({
     if (!url || !url.includes("/media/files/")) return;
     const filename = url.split("/media/files/")[1];
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/files/${filename}`, {
+      await fetch(`http://localhost:8081/media/files/${filename}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       });
@@ -55,14 +55,14 @@ export default function SubirContenido({
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/upload`, {
+      const response = await fetch("http://localhost:8081/media/upload", {
         method: "POST",
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
         body: formData,
       });
       if (!response.ok) throw new Error("Upload failed");
       const result = await response.json();
-      return `${process.env.NEXT_PUBLIC_API_URL}${result.url}`;
+      return `http://localhost:8081${result.url}`;
     } catch (error) {
       console.error("Error subiendo imagen:", error);
       return null;
