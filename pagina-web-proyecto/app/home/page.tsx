@@ -40,7 +40,7 @@ const Dashboard = () => {
           throw new Error("No token found");
         }
 
-        const response = await fetch("https://sima.uis.edu.co/api/courses", {
+        const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/courses`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
