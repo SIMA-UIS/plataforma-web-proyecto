@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /ruta/en/servidor/plataforma-web-proyecto
+            cd C:\Proyectos\plataforma-web-proyecto
             git pull origin main
             docker-compose -f plataforma.yml down
             docker-compose -f plataforma.yml up -d --build
