@@ -6,22 +6,12 @@ on:
       - main
 
 jobs:
-  hello-world:
+  deploy:
     runs-on: ubuntu-latest
-  # deploy:
-  #   runs-on: ubuntu-latest
 
     steps:
-      - name: Echo the message
-        run: |
-          echo "Hola Paula!"
-      - name: Dime la fecha
-        run: date
-      - run: ls -l
-
-    # steps:
-    #   - name: Clonar repositorio
-    #     uses: actions/checkout@v3
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
 
       # - name: Desplegar en el servidor
       #   uses: appleboy/ssh-action@v1.0.0

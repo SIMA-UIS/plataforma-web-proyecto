@@ -30,4 +30,4 @@ docker volume rm plataforma-web-proyecto_mysql_data plataforma-web-proyecto_mong
 
 Modificar `application.properties` también es una opción, pero no recomendable.
 
-### Prueba de CI/CD automática Paula
+### Prueba de CI/CD automática Paulax2
