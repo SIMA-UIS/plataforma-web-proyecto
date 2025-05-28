@@ -46,6 +46,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
+          echo "Conectando a IP: ${{ secrets.SERVER_IP }}"
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Desplegar en el servidor
