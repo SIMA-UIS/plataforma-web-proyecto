@@ -51,7 +51,7 @@ jobs:
 
       - name: Desplegar en el servidor
         run: |
-          ssh administrador@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh Administrador@${{ secrets.SERVER_IP }} << 'EOF'
             cd /c/Proyectos/plataforma-web-proyecto
             git pull origin main
             docker-compose -f plataforma.yml down
