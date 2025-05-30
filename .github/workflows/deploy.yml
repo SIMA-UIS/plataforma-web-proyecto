@@ -42,8 +42,13 @@ jobs:
       - name: Obtener clave SSH y ajustar permisos
         run: |
           mkdir -p ~/.ssh
-          printf "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 700 ~/.ssh
+          cat <<EOF > ~/.ssh/id_ed25519
+          ${{ secrets.SSH_PRIVATE_KEY }}
+          EOF
           chmod 600 ~/.ssh/id_ed25519
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
        #   eval "$(ssh-agent -s)"
        #   ssh-add ~/.ssh/id_ed25519
@@ -51,7 +56,7 @@ jobs:
 
       - name: Desplegar en Windows Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USER_DEPLOY }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ secrets.USER_DEPLOY }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /c/Proyectos/plataforma-web-proyecto
             git pull origin main
             docker-compose -f plataforma.yml down
