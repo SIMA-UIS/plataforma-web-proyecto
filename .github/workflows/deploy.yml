@@ -43,23 +43,23 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          cat <<EOF > ~/.ssh/id_ed25519
+          cat <<EOF > ~/.ssh/id_rsa
           ${{ secrets.SSH_PRIVATE_KEY }}
           EOF
-          chmod 600 ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_rsa
           eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_ed25519
+          ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Verificar contenido de known_hosts
         run: cat ~/.ssh/known_hosts
        #   eval "$(ssh-agent -s)"
-       #   ssh-add ~/.ssh/id_ed25519
+       #   ssh-add ~/.ssh/id_rsa
        #   echo "Conectando a IP: ${{ secrets.SERVER_IP }}"
 
       - name: Desplegar en Windows Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ secrets.USER_DEPLOY }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USER_DEPLOY }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /c/Proyectos/plataforma-web-proyecto
             git pull origin main
             docker-compose -f plataforma.yml down
