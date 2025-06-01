@@ -1,4 +1,30 @@
-name: Prueba del runner local
+# name: Prueba del runner local
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   test-runner:
+#     runs-on: self-hosted  # Esto indica que se usará tu runner en Windows Server
+
+#     steps:
+#       - name: Verificar que el runner está activo
+#         run: echo "¡Runner ejecutándose correctamente en $env:COMPUTERNAME!"
+
+#       - name: Mostrar fecha y usuario actual
+#         run: |
+#           echo Fecha: (Get-Date)
+#           whoami
+
+#       - name: Verificar ubicación y espacio en disco
+#         run: |
+#           Get-Location
+#           Get-PSDrive C
+
+name: CI/CD Pipeline
 
 on:
   push:
@@ -7,45 +33,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-runner:
-    runs-on: self-hosted  # Esto indica que se usará tu runner en Windows Server
+  # setup:
+  #   name: Instalando dependencias
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Clonar repositorio
+  #       uses: actions/checkout@v3
 
-    steps:
-      - name: Verificar que el runner está activo
-        run: echo "¡Runner ejecutándose correctamente en $env:COMPUTERNAME!"
+  #     - name: Configurar Node.js
+  #       uses: actions/setup-node@v3
 
-      - name: Mostrar fecha y usuario actual
-        run: |
-          echo Fecha: (Get-Date)
-          whoami
-
-      - name: Verificar ubicación y espacio en disco
-        run: |
-          Get-Location
-          Get-PSDrive C
-
-# name: CI/CD Pipeline
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   setup:
-#     name: Instalación de dependencias
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Clonar repositorio
-#         uses: actions/checkout@v3
-
-#       - name: Configurar Node.js
-#         uses: actions/setup-node@v3
-
-#       - name: Instalar dependencias
-#         run: |
-#           cd pagina-web-proyecto
-#           yarn install --no-audit --no-fund --no-optional
+  #     - name: Instalar dependencias
+  #       run: |
+  #         cd pagina-web-proyecto
+  #         yarn install --no-audit --no-fund --no-optional
 
       # - name: Ejecutar lint
       #   run: |
@@ -57,49 +58,39 @@ jobs:
       #     cd pagina-web-proyecto
       #     yarn build
   
-  # deploy:
-  #   name: Desplegar al servidor
-  #   runs-on: self-hosted
-  #   needs: setup
-  #   steps:
-  #     - name: Clonar repositorio
-  #       uses: actions/checkout@v3
+  deploy:
+    name: Desplegar al servidor
+    runs-on: self-hosted
+  #  needs: setup
+    steps:     
+      - name: Mostrar informacion del entorno
+        run: |
+          echo "Servidor: $env:COMPUTERNAME"
+          echo "Fecha: $(Get-Date)"
+          whoami
 
-      # - name: Obtener clave SSH y ajustar permisos
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     chmod 700 ~/.ssh
-      #     cat <<EOF > ~/.ssh/id_rsa
-      #     ${{ secrets.SSH_PRIVATE_KEY }}
-      #     EOF
-      #     chmod 600 ~/.ssh/id_rsa
-      #     eval "$(ssh-agent -s)"
-      #     ssh-add ~/.ssh/id_rsa
-      #     ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+      - name: Ir al proyecto
+        working-directory: 'C:\Proyectos\plataforma-web-proyecto'
+        run: echo "Directorio correcto"
 
-      # - name: Verificar contenido de known_hosts
-      #   run: cat ~/.ssh/known_hosts
-       #   eval "$(ssh-agent -s)"
-       #   ssh-add ~/.ssh/id_rsa
-       #   echo "Conectando a IP: ${{ secrets.SERVER_IP }}"
+      - name: Hacer git pull
+        working-directory: 'C:\Proyectos\plataforma-web-proyecto'
+        run: |
+          git reset --hard
+          git pull origin main
 
-      # - name: Desplegar en Windows Server
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USER_DEPLOY }}@${{ secrets.SERVER_IP }} << 'EOF'
-      #       cd /c/Proyectos/plataforma-web-proyecto
-      #       git pull origin main
-      #       docker-compose -f plataforma.yml down
-      #       docker-compose -f plataforma.yml up -d --build
-      #     EOF
+      - name: Reconstruir y levantar contenedores Docker con plataforma.yml
+        working-directory: 'C:\Proyectos\plataforma-web-proyecto'
+        run: |
+          docker-compose -f plataforma.yml down
+          docker-compose -f plataforma.yml build
+          docker-compose -f plataforma.yml up -d
 
-      # - name: Desplegar en el servidor usando SCP
-      #   run: |
-      #     ssh administrador@${{ secrets.SERVER_IP }} << 'EOF'
-      #       cd /c/Proyectos/plataforma-web-proyecto
-      #       git pull origin main
-      #       docker-compose -f plataforma.yml down
-      #       docker-compose -f plataforma.yml up -d --build
-      #     EOF
+      - name: Ver contenedores en ejecución
+        run: docker ps
+
+      # - name: Clonar repositorio
+      #   uses: actions/checkout@v3
 
       # - name: Desplegar en el servidor
       #   uses: appleboy/ssh-action@v1.0.0
