@@ -1,23 +1,4 @@
 services:
-  mysql:
-    image: mysql:latest
-    container_name: platform_mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 12345678
-      MYSQL_DATABASE: universidad
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - app_network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p12345678"]
-      start_period: 5s
-      interval: 3s
-      retries: 5
-      timeout: 60s
-
   mongodb:
       image: mongo:latest
       container_name: platform_mongo
@@ -37,6 +18,11 @@ services:
         interval: 3s
         retries: 5
         timeout: 60s
+      # logging:
+      #   driver: "json-file"
+      #   options:
+      #     max-size: "10m"
+      #     max-file: "3"
 
   server:
     build:
@@ -46,8 +32,6 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      mysql:
-        condition: service_healthy
       mongodb:
         condition: service_healthy
     networks:
@@ -64,6 +48,11 @@ services:
       - server
     networks:
       - app_network
+    # logging:
+    #   driver: "json-file"
+    #   options:
+    #     max-size: "10m"
+    #     max-file: "3"
 
   nginx:
     image: nginx:latest
@@ -79,9 +68,13 @@ services:
       - webpage
     networks:
       - app_network
+    # logging:
+    #   driver: "json-file"
+    #   options:
+    #     max-size: "10m"
+    #     max-file: "3"
 
 volumes:
-  mysql_data:
   mongo_data:
 
 networks:
