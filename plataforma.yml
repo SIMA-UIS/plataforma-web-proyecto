@@ -17,6 +17,11 @@ services:
       interval: 3s
       retries: 5
       timeout: 60s
+    # logging:
+    #   driver: "json-file"
+    #   options:
+    #     max-size: "10m"
+    #     max-file: "3"
 
   mongodb:
       image: mongo:latest
