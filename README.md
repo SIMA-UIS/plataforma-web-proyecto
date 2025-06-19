@@ -30,6 +30,7 @@ docker volume rm plataforma-web-proyecto_mysql_data plataforma-web-proyecto_mong
 
 Modificar `application.properties` también es una opción, pero no recomendable.
 
+
 # 🛠️ Desarrollo de funcionalidades para la plataforma
 
 ## 🌿 Estructura de Ramas
@@ -41,6 +42,7 @@ Modificar `application.properties` también es una opción, pero no recomendable
 | `feature/*` | Nuevas funcionalidades.                     |
 | `fix/*`     | Corrección de errores detectados en `dev`.  |
 | `hotfix/*`  | Corrección urgente directamente sobre `main`.|
+
 
 ## 📌 Reglas Generales
 
@@ -58,7 +60,7 @@ Modificar `application.properties` también es una opción, pero no recomendable
 
 ---
 
-## Flujo de Trabajo
+## 🔁 Flujo de Trabajo
 
 ### Crear una nueva rama
 ```bash
@@ -90,7 +92,8 @@ git push origin feature/nombre-de-la-funcion
 
 ---
 
-## Revisión y Merge
+
+## ✅ Revisión y Merge
 
 - Todo PR debe pasar por una **revisión manual** o automática.
 - El líder del equipo o revisor hace merge una vez aprobado.
@@ -98,7 +101,8 @@ git push origin feature/nombre-de-la-funcion
 
 ---
 
-## Casos urgentes
+
+## 🚨 Casos urgentes
 
 Si es necesario aplicar una corrección inmediata en producción:
 
