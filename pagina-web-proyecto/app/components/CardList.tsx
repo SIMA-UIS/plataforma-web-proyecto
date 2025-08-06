@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import CrearInstrucciones from "./CrearInstrucciones";
 import SubirContenido from "./SubirContenido";
 import CrearEvaluacion from "./CrearEvaluacion";
+import CrearExperiencia from "./CrearExperiencia";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface CardListProps {
@@ -78,7 +79,7 @@ export default function CardList({
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}`,
+        `http://localhost:8081/api/courses/${courseId}`,
         {
           method: "PUT",
           headers: {
@@ -143,6 +144,13 @@ export default function CardList({
               handleInputChange={handleInputChange}
               name={name}
             />
+          ): activeCardId === 2 && name === "afterClass" ? ( // <-- SI ES afterClass CAMBIA
+            <CrearExperiencia
+              courseData={courseData}
+              setCourseData={setCourseData}
+              handleInputChange={handleInputChange}
+              name={name}
+            />
           ) : activeCardId === 2 ? (
             <SubirContenido
               courseData={courseData}
@@ -150,7 +158,7 @@ export default function CardList({
               handleInputChange={handleInputChange}
               name={name}
             />
-          ) : (
+          )  : (
             <CrearEvaluacion
               courseData={courseData}
               setCourseData={setCourseData}
