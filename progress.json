@@ -1,0 +1,2 @@
+{"_id":{"$oid":"6834cd7f3f030b6ae2678986"},"courseId":"6834cd7e3f030b6ae2678985","studentEmail":"camilo@gmail.com","progressStatus":"pendiente","completedEvaluations":[],"startedAt":{"$date":"2025-05-26T20:22:23.01Z"},"_class":"com.proyectogrado.plataforma.progress.Model.Progress"}
+{"_id":{"$oid":"687d2f1dbca59b6525eca75d"},"courseId":"687d2f1dbca59b6525eca75c","studentEmail":"levir@gmail.com","progressStatus":"pendiente","completedEvaluations":[],"startedAt":{"$date":"2025-07-20T18:02:05.86Z"},"_class":"com.proyectogrado.plataforma.progress.Model.Progress"}

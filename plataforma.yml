@@ -2,6 +2,7 @@ services:
   mongodb:
       image: mongo:latest
       container_name: platform_mongo
+      restart: unless-stopped
       environment:
         MONGO_INITDB_ROOT_USERNAME: admin
         MONGO_INITDB_ROOT_PASSWORD: 12345678
@@ -11,52 +12,65 @@ services:
       volumes:
         - mongo_data:/data/db
       networks:
-        - app_network
+        - plataforma-web-proyecto_app_network
       healthcheck:
         test: ["CMD", "mongosh", "--host", "localhost", "--username", "admin", "--password", "12345678", "--eval", "db.adminCommand('ping')"]
         start_period: 5s
         interval: 3s
         retries: 5
         timeout: 60s
-      # logging:
-      #   driver: "json-file"
-      #   options:
-      #     max-size: "10m"
-      #     max-file: "3"
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "10m"
+          max-file: "3"
 
   server:
     build:
       context: ./plataforma-proyecto
       dockerfile: Dockerfile
     container_name: platform_server
+    restart: unless-stopped
     ports:
       - "8081:8081"
     depends_on:
       mongodb:
         condition: service_healthy
     networks:
-      - app_network
+      - plataforma-web-proyecto_app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   webpage:
     build:
       context: ./pagina-web-proyecto
       dockerfile: Dockerfile
     container_name: platform_webpage
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
     ports:
       - "3000:3000"
     depends_on:
       - server
     networks:
-      - app_network
-    # logging:
-    #   driver: "json-file"
-    #   options:
-    #     max-size: "10m"
-    #     max-file: "3"
+      - plataforma-web-proyecto_app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nginx:
     image: nginx:latest
     container_name: platform_nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -67,16 +81,18 @@ services:
       - server
       - webpage
     networks:
-      - app_network
-    # logging:
-    #   driver: "json-file"
-    #   options:
-    #     max-size: "10m"
-    #     max-file: "3"
+      - plataforma-web-proyecto_app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   mongo_data:
 
 networks:
-  app_network:
-    driver: bridge
+  plataforma-web-proyecto_app_network:
+    external: true
+  # app_network:
+  #   driver: bridge

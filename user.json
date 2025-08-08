@@ -1,0 +1,2 @@
+{"_id":{"$oid":"6854613afc0bf96a5e7706d7"},"username":"luisBau@gmail.com","lastname":"Bautista","firstname":"Luis","password":"$2a$10$S8SgpVD/5aBXxFQ8kRIhfujFvrKHlcDoItiyjoQ/lwogbHjQ9koWq","role":"TEACHER","_class":"com.proyectogrado.plataforma.auth.Entities.User"}
+{"_id":{"$oid":"687d2ebcbca59b6525eca75b"},"username":"levir@gmail.com","lastname":"Hernandez","firstname":"Levir","password":"$2a$10$vZMBA.FemKyG8uLbM6GEGO8kGfBirRN8QV48PGPVQGohBfWWRXy/O","role":"STUDENT","_class":"com.proyectogrado.plataforma.auth.Entities.User"}
