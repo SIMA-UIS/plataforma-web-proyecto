@@ -21,7 +21,6 @@ const ActivityStudent: React.FC<ActivityStudentProps> = ({
 
   useEffect(() => {
     const loadProtectedImage = async () => {
-      console.log(image);
       if (!image) return;
 
       const token = Cookies.get("token");
