@@ -1,43 +1,36 @@
 package com.proyectogrado.plataforma.media.controllers;
 
+import com.proyectogrado.plataforma.media.exceptions.InvalidExperienceException;
 import com.proyectogrado.plataforma.media.services.MediaFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/media")
-public class MediaFileController {
-
+public class MediaFileController
+{
     @Autowired
     private MediaFileService mediaFileService;
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
-        try {
-            String uploadDir = System.getProperty("user.dir") + "/uploads/";
-            File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs();
-
-            String fileName = file.getOriginalFilename();
-            File localFile = new File(uploadDir + fileName);
-            file.transferTo(localFile);
-
-            String fileUrl = "/media/files/" + fileName;
-
+        try
+        {
+            String fileUrl = mediaFileService.uploadFile(file);
             return ResponseEntity.ok(Map.of("url", fileUrl));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error uploading file."));
         }
@@ -45,17 +38,15 @@ public class MediaFileController {
 
     @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        try {
-            Path filePath = Paths.get(System.getProperty("user.dir"), "uploads").resolve(filename).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
+        try
+        {
+            Resource resource = mediaFileService.getFile(filename);
+            if (!resource.exists()) {return ResponseEntity.notFound().build();}
 
-            if (!resource.exists()) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // 🔥 Detecta el tipo MIME (image/png, application/pdf, etc.)
-            String contentType = java.nio.file.Files.probeContentType(filePath);
-            if (contentType == null) {
+            // Detecta el tipo MIME (image/png, application/pdf, etc.)
+            String contentType = java.nio.file.Files.probeContentType(Path.of(resource.getURI()));
+            if (contentType == null)
+            {
                 contentType = "application/octet-stream"; // fallback
             }
 
@@ -65,34 +56,104 @@ public class MediaFileController {
                     .body(resource);
 
         } catch (Exception e) {
-            System.out.println("🚨 Error al servir el archivo: " + e.getMessage());
+            System.out.println("Error al servir el archivo: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
 
     @DeleteMapping("/files/{filename:.+}")
-    public ResponseEntity<?> deleteFile(@PathVariable String filename) {
-        try {
-            Path filePath = Paths.get(System.getProperty("user.dir"), "uploads").resolve(filename).normalize();
-            File file = filePath.toFile();
+    public ResponseEntity<?> deleteFile(@PathVariable String filename)
+    {
+        try
+        {
+            String messageType = "message";
+            String message = mediaFileService.deleteFile(filename);
 
-            if (file.exists()) {
-                if (file.delete()) {
-                    return ResponseEntity.ok(Map.of("message", "Archivo eliminado exitosamente"));
-                } else {
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .body(Map.of("error", "No se pudo eliminar el archivo"));
-                }
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("error", "Archivo no encontrado"));
+            Function<Map<String,?>, ResponseEntity<?>> responseEntity;
+            if(message.equals("Archivo eliminado exitosamente"))
+            {
+                responseEntity = ResponseEntity::ok;
             }
-        } catch (Exception e) {
+            else
+            {
+                messageType = "error";
+                if(message.equals("No se pudo eliminar el archivo"))
+                {
+                    responseEntity = body -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+                }
+                else // if(message.equals("No se pudo eliminar el archivo"))
+                {
+                    responseEntity = body -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+                }
+            }
+            return responseEntity.apply(Map.of(messageType, message));
+        }
+        catch (Exception e)
+        {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error eliminando archivo: " + e.getMessage()));
         }
     }
 
+    @PostMapping("/upload/experience")
+    public ResponseEntity<?> uploadExperience(@RequestParam("file") MultipartFile file)
+    {
+        try
+        {
+            String message = mediaFileService.uploadExperience(file);
+            if(!message.equals("Empty file."))
+            {
+                return ResponseEntity.ok(Map.of("url", message));
+            }
+            else
+            {
+                return ResponseEntity.badRequest().body(Map.of("error", message));
+            }
+        }
+        catch (IOException e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error uploading file."));
+        }
+        catch(InvalidExperienceException e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 
+    @DeleteMapping("/experiences/{experience}")
+    public ResponseEntity<?> deleteExperience(@PathVariable("experience") String experience)
+    {
+        try
+        {
+            String messageType = "message";
+            String message = mediaFileService.deleteExperience(experience);
+
+            Function<Map<String,?>, ResponseEntity<?>> responseEntity;
+            if(message.equals("Experiencia eliminada exitosamente"))
+            {
+                responseEntity = ResponseEntity::ok;
+            }
+            else
+            {
+                messageType = "error";
+                if(message.equals("Experiencia no encontrada"))
+                {
+                    responseEntity = body -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+                }
+                else // if(message.equals("No se pudo eliminar la experiencia"))
+                {
+                    responseEntity = body -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+                }
+            }
+            return responseEntity.apply(Map.of(messageType, message));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error eliminando la experiencia: " + e.getMessage()));
+        }
+    }
 }

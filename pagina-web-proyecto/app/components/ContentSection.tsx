@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Cookies from "js-cookie";
 import Resumen from "./Resumen";
 import { FaDownload } from "react-icons/fa";
-
+import EvaluacionViewStudent from "../components/EvaluacionViewStudent";
 
 interface ContentSectionProps {
   title: string;
@@ -39,12 +39,10 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
       await Promise.all(
         contents.map(async (content) => {
           if (!content.imageUrl || content.imageUrl.startsWith("blob:")) return;
-
           try {
             const res = await fetch(content.imageUrl, {
               headers: { Authorization: `Bearer ${token}` },
             });
-
             if (!res.ok) return;
 
             const blob = await res.blob();
@@ -61,6 +59,58 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
 
     loadImages();
   }, [course, title]);
+
+  const getMimeTypeFromUrl = (url: string): string => {
+    const lowerUrl = url.toLowerCase();
+
+    if (lowerUrl.endsWith(".pdf")) return "application/pdf";
+    if (lowerUrl.endsWith(".doc")) return "application/msword";
+    if (lowerUrl.endsWith(".docx")) return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    if (lowerUrl.endsWith(".xls")) return "application/vnd.ms-excel";
+    if (lowerUrl.endsWith(".xlsx")) return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    if (lowerUrl.endsWith(".ppt")) return "application/vnd.ms-powerpoint";
+    if (lowerUrl.endsWith(".pptx")) return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+
+    if (lowerUrl.endsWith(".jpg") || lowerUrl.endsWith(".jpeg")) return "image/jpeg";
+    if (lowerUrl.endsWith(".png")) return "image/png";
+    if (lowerUrl.endsWith(".gif")) return "image/gif";
+    if (lowerUrl.endsWith(".svg")) return "image/svg+xml";
+    if (lowerUrl.endsWith(".webp")) return "image/webp";
+
+    if (lowerUrl.endsWith(".mp4")) return "video/mp4";
+    if (lowerUrl.endsWith(".webm")) return "video/webm";
+    if (lowerUrl.endsWith(".mov")) return "video/quicktime";
+
+    if (lowerUrl.endsWith(".mp3")) return "audio/mpeg";
+    if (lowerUrl.endsWith(".wav")) return "audio/wav";
+    if (lowerUrl.endsWith(".ogg")) return "audio/ogg";
+
+    if (lowerUrl.endsWith(".zip")) return "application/zip";
+    if (lowerUrl.endsWith(".rar")) return "application/vnd.rar";
+    if (lowerUrl.endsWith(".7z")) return "application/x-7z-compressed";
+
+    if (lowerUrl.endsWith(".txt")) return "text/plain";
+    if (lowerUrl.endsWith(".csv")) return "text/csv";
+    if (lowerUrl.endsWith(".json")) return "application/json";
+
+    return "unknown";
+  };
+
+  const [completedContents, setCompletedContents] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    if (currentSection?.contents?.length) {
+      setCompletedContents(new Array(currentSection.contents.length).fill(false));
+    }
+  }, [currentSection]);
+
+  const toggleCompleted = (index: number) => {
+    setCompletedContents(prev => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
 
   return (
     <div className="w-full px-6 py-6 space-y-6 bg-white">
@@ -81,31 +131,25 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 text-center text-sm md:text-base font-medium transition-colors ${
-              activeTab === tab
-                ? "bg-[#EDFAFA] text-[#096874]"
-                : "bg-white text-gray-600 hover:bg-gray-100"
-            }`}
+            className={`py-3 text-center text-sm md:text-base font-medium transition-colors ${activeTab === tab
+              ? "bg-[#EDFAFA] text-[#096874]"
+              : "bg-white text-gray-600 hover:bg-gray-100"
+              }`}
           >
             {tab}
           </button>
         ))}
       </div>
 
-      {/* 🔸 CONTENIDO CENTRADO */}
+      {/* CONTENIDO CENTRADO */}
       <div className="w-full max-w-4xl mx-auto space-y-6">
-        {/* 🔹 Instrucciones */}
+        {/* Instrucciones */}
         {activeTab === "Instrucciones" && currentSection?.instructions && (
           <div className="space-y-3">
             <h2 className="text-xl font-semibold mb-4">
               {currentSection.instructions.instructionTitle}
             </h2>
-            <p className="text-sm text-gray-500">
-              {currentSection.instructions.time} min
-            </p>
-            <Resumen
-              description={currentSection.instructions.instructionDescription}
-            />
+            <Resumen description={currentSection.instructions.instructionDescription} />
             {currentSection.instructions.steps?.length > 0 && (
               <ol className="list-decimal list-inside text-gray-700 space-y-1 mt-2">
                 {currentSection.instructions.steps
@@ -115,6 +159,12 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
                   ))}
               </ol>
             )}
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-sm font-semibold text-gray-500">Tiempo sugerido de estudio:</h2>
+              <p className="text-sm px-2 py-1 rounded text-green-700 bg-green-100 inline-block">
+                {currentSection.instructions.time} min
+              </p>
+            </div>
             <div className="mt-4 flex items-center gap-2">
               <input type="checkbox" id="completado" />
               <label htmlFor="completado" className="text-gray-600 text-sm">
@@ -124,7 +174,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
           </div>
         )}
 
-        {/* 🔹 Contenido */}
+        {/* Contenido */}
         {activeTab === "Contenido" && (
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold text-primary-10">
@@ -136,32 +186,64 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
                 <div className="p-4 rounded-md space-y-4">
                   {(() => {
                     const content = currentSection.contents[activeContentIndex];
-                    const imageSrc = content.imageUrl.startsWith("blob:")
+
+                    // 👉 Si es experiencia WebGL
+                    if (content.experienceUrl && content.experienceUrl !== "NA") {
+                      return (
+                        <>
+                          <h4 className="text-lg font-semibold text-primary-10">
+                            {content.contentTitle}
+                          </h4>
+                          <iframe
+                            src={content.experienceUrl}
+                            className="w-full h-[500px] border rounded"
+                            allow="autoplay; fullscreen; vr"
+                          />
+                          <p className="text-sm text-primary-30 mt-2">
+                            {content.contentDescription}
+                          </p>
+                          <div className="flex items-center gap-2 mb-2">
+                            <h2 className="text-sm font-semibold text-gray-500">Tiempo sugerido de estudio:</h2>
+                            <p className="text-sm px-2 py-1 rounded text-green-700 bg-green-100 inline-block">
+                              {content.time} min
+                            </p>
+                          </div>
+                          <div className="pt-2">
+                            <label className="inline-flex items-center gap-2 text-sm text-primary-30">
+                              <input type="checkbox" />
+                              Marcar como completado
+                            </label>
+                          </div>
+                        </>
+                      );
+                    } else if (content.experienceUrl === "NA") {
+                      return (
+                        <>
+                          <div className="w-full min-h-[120px] border border-dashed border-gray-300 rounded flex items-center justify-center px-4 py-6 text-center text-gray-500 text-sm italic">
+                            Este curso no cuenta con una experiencia de realidad aumentada para navegador
+                          </div>
+                        </>
+                      );
+                    }
+
+                    // 👉 Caso normal (imagen/video/audio/pdf)
+
+                    if (currentSection?.contents[0]?.contentTitle === "NA") {
+                      return (
+                        <div className="w-full min-h-[120px] border border-dashed border-gray-300 rounded flex items-center justify-center px-4 py-6 text-center text-gray-500 text-sm italic">
+                          Esta sección no cuenta con ningún contenido asociado
+                        </div>
+                      );
+                    }
+
+                    const mimeType = content.imageUrl ? getMimeTypeFromUrl(content.imageUrl) : "unknown";
+                    const imageSrc = content.imageUrl?.startsWith("blob:")
                       ? content.imageUrl
                       : images[content.imageUrl] || "";
 
-                    const isPdf = content.imageUrl
-                      .toLowerCase()
-                      .endsWith(".pdf");
-
                     return (
                       <>
-                        {imageSrc && isPdf ? (
-                          <div className="w-full max-w-xs bg-primary-98 rounded-xl border border-gray-200 px-6 py-5 shadow-sm">
-                            <h4 className="text-base font-medium text-primary-10 mb-2 text-center">
-                              {content.contentTitle}
-                            </h4>
-                            <a
-                              href={imageSrc}
-                              download
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block text-center text-sm font-semibold text-primary-40 hover:underline"
-                            >
-                              Documento PDF <FaDownload className="text-base" />
-                            </a>
-                          </div>
-                        ) : imageSrc ? (
+                        {imageSrc && mimeType.startsWith("image/") && (
                           <img
                             src={imageSrc}
                             alt="Contenido visual"
@@ -170,20 +252,58 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
                               e.currentTarget.style.display = "none";
                             }}
                           />
-                        ) : null}
+                        )}
 
-                        <h4 className="text-lg font-semibold text-primary-10 mt-4">
-                          Descripción
-                        </h4>
-                        <p className="text-sm text-primary-30">
-                          {content.contentDescription}
-                        </p>
-                        <p className="text-xs text-primary-20">
-                          {content.time} min
-                        </p>
+                        {imageSrc && mimeType.startsWith("video/") && (
+                          <video
+                            src={imageSrc}
+                            controls
+                            className="w-full max-h-64 object-contain rounded-md mx-auto"
+                          />
+                        )}
+
+                        {imageSrc && mimeType.startsWith("audio/") && (
+                          <audio
+                            src={imageSrc}
+                            controls
+                            className="w-full rounded-md mx-auto"
+                          />
+                        )}
+
+                        {/* Bloque genérico para PDF, DOC, TXT, etc. */}
+                        {imageSrc &&
+                          !mimeType.startsWith("image/") &&
+                          !mimeType.startsWith("video/") &&
+                          !mimeType.startsWith("audio/") && (
+                            <div className="w-full max-w-xs bg-primary-98 rounded-xl border border-gray-200 px-6 py-5 shadow-sm">
+                              <h4 className="text-base font-medium text-primary-10 mb-2 text-center">
+                                {content.contentTitle}
+                              </h4>
+                              <a
+                                href={imageSrc}
+                                download={`doc-${Date.now()}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-center text-sm font-semibold text-primary-40 hover:underline"
+                              >
+                                Descargar Documento <FaDownload className="text-base inline ml-1" />
+                              </a>
+                            </div>
+                          )}
+
+                        <div className="flex items-center gap-2 mb-2">
+                          <h2 className="text-sm font-semibold text-gray-500">Tiempo sugerido de estudio:</h2>
+                          <p className="text-sm px-2 py-1 rounded text-green-700 bg-green-100 inline-block">
+                            {content.time} min
+                          </p>
+                        </div>
                         <div className="pt-2">
                           <label className="inline-flex items-center gap-2 text-sm text-primary-30">
-                            <input type="checkbox" />
+                            <input
+                              type="checkbox"
+                              checked={completedContents[activeContentIndex] || false}
+                              onChange={() => toggleCompleted(activeContentIndex)}
+                            />
                             Marcar como completado
                           </label>
                         </div>
@@ -229,28 +349,15 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
           </div>
         )}
 
-        {/* 🔹 Evaluaciones */}
+        {/* Evaluaciones */}
         {activeTab === "Evaluación" && (
-          <div className="space-y-3">
-            {currentSection?.evaluations?.length ? (
-              currentSection.evaluations.map((evalItem, idx) => (
-                <div
-                  key={idx}
-                  className="border p-4 rounded-md bg-gray-50 space-y-2"
-                >
-                  <h4 className="text-md font-semibold text-gray-800">
-                    {evalItem.question}
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    {evalItem.questionDescription}
-                  </p>
-                  <p className="text-xs text-gray-400">{evalItem.time} min</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500">No hay evaluaciones disponibles.</p>
-            )}
-          </div>
+          currentSection?.evaluations[0].question === "NA" ? (
+            <div className="w-full min-h-[120px] border border-dashed border-gray-300 rounded flex items-center justify-center px-4 py-6 text-center text-gray-500 text-sm italic">
+              Esta sección no cuenta con una evaluación de conocimientos
+            </div>
+          ) : (
+            <EvaluacionViewStudent evaluations={currentSection?.evaluations} />
+          )
         )}
       </div>
     </div>

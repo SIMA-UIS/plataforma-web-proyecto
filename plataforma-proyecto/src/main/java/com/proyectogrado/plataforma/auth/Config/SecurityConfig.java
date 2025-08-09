@@ -4,6 +4,7 @@ import com.proyectogrado.plataforma.auth.Jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +28,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource)) // Usa la configuración de CORS personalizada
                 .authorizeHttpRequests(authRequest -> authRequest
-                        .requestMatchers("/auth/**", "/api/v1/demo").permitAll() // Permite acceso sin autenticación a estas rutas
+                        .requestMatchers("/auth/**").permitAll() // Permite acceso sin autenticación a estas rutas
+                        .requestMatchers(HttpMethod.GET, "/media/experiences/**").permitAll()
                         .anyRequest().authenticated() // El resto de las rutas requieren autenticación
                 )
+                .headers(headers -> headers.frameOptions().disable())
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

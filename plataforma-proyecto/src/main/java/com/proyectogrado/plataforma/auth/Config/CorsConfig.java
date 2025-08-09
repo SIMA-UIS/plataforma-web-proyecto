@@ -14,7 +14,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://sima.uis.edu.co")); // Permite solicitudes desde este origen
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Permite solicitudes desde este origen
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Permite estos métodos HTTP
         configuration.setAllowedHeaders(List.of("*")); // Permite todos los encabezados
         configuration.setAllowCredentials(true); // Permite el envío de credenciales (como cookies)

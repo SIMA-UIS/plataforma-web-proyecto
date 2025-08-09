@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import CrearInstrucciones from "./CrearInstrucciones";
 import SubirContenido from "./SubirContenido";
 import CrearEvaluacion from "./CrearEvaluacion";
+import CrearExperiencia from "./CrearExperiencia";
 import { FaCheckCircle } from "react-icons/fa";
 
 interface CardListProps {
@@ -52,17 +53,17 @@ export default function CardList({
   const cards = [
     {
       id: 1,
-      title: "Crear instrucciones",
+      title: course.isPublic ? "Prebriefing":"Crear instrucciones",
       isFilled: getInstructionStatus(currentData.instructions),
     },
     {
       id: 2,
-      title: "Subir contenido",
+      title: course.isPublic ? "Briefing":"Subir contenido",
       isFilled: getContentStatus(currentData.contents),
     },
     {
       id: 3,
-      title: "Crear evaluación",
+      title: course.isPublic ? "Debriefing":"Crear evaluación",
       isFilled: getEvaluationStatus(currentData.evaluations),
     },
   ];
@@ -142,6 +143,13 @@ export default function CardList({
               setCourseData={setCourseData}
               handleInputChange={handleInputChange}
               name={name}
+              hasSimulation={course.isPublic}
+            />
+          ): activeCardId === 2 && name === "afterClass" ? ( // <-- SI ES afterClass CAMBIA
+            <CrearExperiencia
+              courseData={courseData}
+              setCourseData={setCourseData}
+              hasSimulation={course.isPublic}
             />
           ) : activeCardId === 2 ? (
             <SubirContenido
@@ -149,13 +157,15 @@ export default function CardList({
               setCourseData={setCourseData}
               handleInputChange={handleInputChange}
               name={name}
+              hasSimulation={course.isPublic}
             />
-          ) : (
+          )  : (
             <CrearEvaluacion
               courseData={courseData}
               setCourseData={setCourseData}
               handleInputChange={handleInputChange}
               name={name}
+              hasSimulation={course.isPublic}
             />
           )}
 

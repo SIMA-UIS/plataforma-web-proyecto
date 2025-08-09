@@ -13,5 +13,7 @@ public class Content {
     private String contentDescription;
     private Integer time;
     private String imageUrl;
+    private String fileType;
+    private String experienceUrl;
 
 }
