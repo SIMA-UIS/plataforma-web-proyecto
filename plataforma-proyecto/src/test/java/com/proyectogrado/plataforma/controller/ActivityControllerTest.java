@@ -33,8 +33,11 @@ class ActivityControllerTest
     @BeforeAll
     static void beforeAll()
     {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8081;
+        String baseUri = System.getenv().getOrDefault("TEST_BASE_URI", "http://localhost");
+        int port = Integer.parseInt(System.getenv().getOrDefault("TEST_PORT", "8081"));
+
+        RestAssured.baseURI = baseUri;
+        RestAssured.port = port;
     }
 
     @Test

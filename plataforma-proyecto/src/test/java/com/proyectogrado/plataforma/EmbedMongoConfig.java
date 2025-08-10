@@ -23,6 +23,14 @@ public class EmbedMongoConfig
     @Bean
     public MongoClient mongoClient() throws Exception
     {
+
+        // Lee la URI desde variable de entorno, si no existe, usa localhost
+        String mongoUri = System.getenv("MONGODB_URI");
+        if (mongoUri != null && !mongoUri.isEmpty()) {
+            // Si estamos en Docker o variable definida → usar conexión externa
+            return MongoClients.create(mongoUri);
+        }
+
         int port = 27017;
         ImmutableMongodConfig mongodConfig = MongodConfig.builder()
                 .version(Version.Main.PRODUCTION)
