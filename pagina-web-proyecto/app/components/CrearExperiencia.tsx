@@ -29,14 +29,14 @@ export default function CrearExperiencia({
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await fetch("http://localhost:8081/media/upload/experience", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/media/upload/experience`, {
         method: "POST",
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
         body: formData,
       });
       if (!response.ok) throw new Error("Error al subir experiencia");
       const result = await response.json();
-      return `http://localhost:8081${result.url}/index.html?token=${Cookies.get("token")}`;
+      return `${process.env.NEXT_PUBLIC_API_URL}${result.url}/index.html?token=${Cookies.get("token")}`;
     } catch (error) {
       console.error("Error subiendo experiencia:", error);
       return null;
