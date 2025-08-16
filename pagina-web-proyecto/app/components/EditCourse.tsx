@@ -50,7 +50,7 @@ export default function EditCourse({ course, onCancel, onComplete }: EditCourseP
       const token = Cookies.get("token");
       try {
         // Traemos todos los usuarios disponibles
-        const res = await fetch("http://localhost:8081/api/users", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(await res.text());
@@ -105,7 +105,7 @@ export default function EditCourse({ course, onCancel, onComplete }: EditCourseP
     };
 
     try {
-      const res = await fetch(`http://localhost:8081/api/courses/${course.courseId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${course.courseId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

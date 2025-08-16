@@ -53,7 +53,7 @@ const CourseDetailsStudent = ({
         const loadedProfessors: User[] = [];
 
         for (const username of course.professorIds) {
-          const res = await fetch(`http://localhost:8081/api/users/${username}`, {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -76,11 +76,18 @@ const CourseDetailsStudent = ({
     fetchProfessors();
   }, [course.professorIds]);
 
-  const sumTime = (items?: { time?: number }[]): number => {
-    if (!Array.isArray(items)) {
-      return items?.time || 0;
+  const sumTime = (items?: TimeItem | TimeItem[]): number => {
+    if (!items) return 0;
+
+    if (Array.isArray(items)) {
+      if (items.length > 0 && items[0]?.experienceUrl) { // quitar si se desea manejar xr en minutos
+        return (items[0].time || 0) * 60;
+      }
+
+      return items.reduce((total, item) => total + (item.time || 0), 0);
     }
-    return items.reduce((total, item) => total + (item.time || 0), 0);
+
+    return items.time || 0;
   };
 
   const calculateTotalTime = (section?: CourseSection): number => {

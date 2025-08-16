@@ -62,7 +62,7 @@ const Dashboard = () => {
           throw new Error("No token found");
         }
 
-        const response = await fetch("http://localhost:8081/api/courses", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -282,7 +282,7 @@ const Dashboard = () => {
                         id={course.courseId}
                         image={course.imageUrl}
                         title={course.courseName}
-                        date="Fecha no disponible"
+                        date="2025-2"
                         onClick={() => handleCourseClick(course)}
                       />
                     ))}
@@ -295,7 +295,7 @@ const Dashboard = () => {
                       id={course.courseId}
                       image={course.imageUrl}
                       title={course.courseName}
-                      date="Fecha no disponible"
+                      date="2025-2"
                       onClick={() => handleCourseClick(course)}
                     />
                   ))
@@ -306,7 +306,7 @@ const Dashboard = () => {
                       id={course.courseId}
                       image={course.imageUrl}
                       title={course.courseName}
-                      date="Fecha no disponible"
+                      date="2025-2"
                       onClick={() => handleCourseClick(course)}
                     />
                   ))
