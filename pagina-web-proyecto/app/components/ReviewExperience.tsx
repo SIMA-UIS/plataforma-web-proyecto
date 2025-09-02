@@ -165,11 +165,7 @@ export default function ReviewExperience({
         </div>
       </div>
 
-      {/* Carrusel de videos */}
-      <div className="bg-white shadow p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4 pb-2 text-left">
-          Videos Capturados Durante la Simulación
-        </h3>
+      {videoUrls.length > 0 ? (
         <div className="flex flex-row items-stretch rounded-lg overflow-hidden shadow-lg">
           {/* Botón anterior */}
           <button
@@ -186,14 +182,11 @@ export default function ReviewExperience({
                 {videoTitles[currentVideoIndex]}
               </span>
             </p>
-            {/* ESTO FALLA
             <iframe
               className="w-full h-48 sm:h-64 rounded-lg border-4 border-primary-60 shadow-lg"
               src={videoUrls[currentVideoIndex].replace("watch?v=", "embed/")}
               allowFullScreen
             ></iframe>
-            */}
-            <p>AQUI VAN LOS VIDEOS - FALLA POR AHORA</p>
             <p className="font-semibold mt-5 text-center">
               <span className="text-sm sm:text-base px-3 py-1 rounded bg-primary-30 text-white">
                 {currentVideoIndex + 1} / {videoUrls.length}
@@ -209,8 +202,11 @@ export default function ReviewExperience({
             ▶
           </button>
         </div>
-      </div>
-
+      ) : (
+        <div className="w-full min-h-[100px] border border-dashed border-gray-300 rounded flex items-center justify-center px-4 py-6 text-center text-gray-500 text-sm italic">
+          No se capturaron videos durante esta simulación
+        </div>
+      )}
 
       {/* Tabla decisiones médicas */}
       <div className="bg-white shadow p-6 rounded-lg overflow-x-auto">
