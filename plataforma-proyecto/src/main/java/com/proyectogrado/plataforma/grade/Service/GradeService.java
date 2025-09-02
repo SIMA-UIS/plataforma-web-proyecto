@@ -31,4 +31,19 @@ public class GradeService {
     public void deleteById(String id) {
         repository.deleteById(id);
     }
+
+    public Optional<Grade> findByStudentIdAndCourseId(String studentId, String courseId) {
+        return repository.findByStudentIdAndCourseId(studentId, courseId);
+    }
+
+    public Optional<Grade> updateByStudentAndCourse(String studentId, String courseId, Grade updatedGrade)
+    {
+        return repository.findByStudentIdAndCourseId(studentId, courseId)
+                .map(existingGrade -> {
+                    updatedGrade.setGradeId(existingGrade.getGradeId());
+                    updatedGrade.setStudentId(studentId);
+                    updatedGrade.setCourseId(courseId);
+                    return repository.save(updatedGrade);
+                });
+    }
 }

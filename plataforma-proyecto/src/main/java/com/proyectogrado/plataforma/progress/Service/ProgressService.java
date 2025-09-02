@@ -10,29 +10,50 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProgressService {
+public class ProgressService
+{
 
     @Autowired
-    private ProgressRepository repository;
+    private ProgressRepository progressRepository;
 
-    // Guardar o actualizar progreso
+    /** Save or update progress */
     public Progress saveProgress(Progress progress) {
-        return repository.save(progress);
+        return progressRepository.save(progress);
     }
 
-    // Buscar progreso de un estudiante en un curso
-    public Optional<Progress> findByCourseIdAndStudentEmail(String courseId, String studentEmail) {
-        return repository.findByCourseIdAndStudentEmail(courseId, studentEmail);
+    /** Find by ID */
+    public Optional<Progress> getById(String id) {
+        return progressRepository.findById(id);
     }
 
-    // Traer todos los progresos de un curso (ej: para que el profe vea)
-    public List<Progress> findAllByCourseId(String courseId) {
-        return repository.findAllByCourseId(courseId);
+    /** Find by courseId and studentId */
+    public Optional<Progress> getByCourseAndStudent(String courseId, String studentId) {
+        return progressRepository.findByCourseIdAndStudentId(courseId, studentId);
     }
 
-    // Borrar progreso de un estudiante
-    public void deleteProgress(String id) {
-        repository.deleteById(id);
+    /** Delete by ID */
+    public void deleteById(String id) {
+        progressRepository.deleteById(id);
     }
 
+    /** Check existence */
+    public boolean existsById(String id) {
+        return progressRepository.existsById(id);
+    }
+
+    /** Calculate percentage */
+    public Optional<Double> getPercentage(String id) {
+        return progressRepository.findById(id).map(Progress::getPercentage);
+    }
+
+    public Optional<Double> getPercentageByCourseAndStudent(String courseId, String studentId)
+    {
+        Optional<Progress> progress = progressRepository.findByCourseIdAndStudentId(courseId, studentId);
+        return progress.map(Progress::getPercentage);
+    }
+
+    /** Find all progress entries by courseId */
+    public List<Progress> getAllByCourseId(String courseId) {
+        return progressRepository.findAllByCourseId(courseId);
+    }
 }
