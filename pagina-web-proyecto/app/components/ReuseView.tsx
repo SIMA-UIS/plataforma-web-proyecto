@@ -86,7 +86,7 @@ export default function ReuseView({ onCancel, onSave, targetCourse }: ReuseViewP
     const fetchCourses = async () => {
       try {
         const token = Cookies.get("token");
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/reuse`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         if (!res.ok) throw new Error("No se pudo cargar la lista de cursos");
@@ -148,14 +148,14 @@ export default function ReuseView({ onCancel, onSave, targetCourse }: ReuseViewP
       if (!targetCourse?.courseId) throw new Error("No hay curso destino (actual)");
 
       // 1) GET curso fuente (completo)
-      const srcRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${sourceCourseId}`, {
+      const srcRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/reuse/${sourceCourseId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!srcRes.ok) throw new Error((await srcRes.text()) || "No se pudo cargar el curso fuente");
       const sourceCourse: FullCourseDTO = await srcRes.json();
 
       // 2) GET curso destino (actual, completo)
-      const tgtRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${targetCourse.courseId}`, {
+      const tgtRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/reuse/${targetCourse.courseId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!tgtRes.ok) throw new Error((await tgtRes.text()) || "No se pudo cargar el curso actual");
