@@ -633,7 +633,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
                       : courseData.beforeClass?.contents?.length || 0}
                   </li>
                   <li>
-                    <span className="font-bold text-primary-40">Evaluaciones:</span>{" "}
+                    <span className="font-bold text-primary-40">Preguntas:</span>{" "}
                     {courseData.beforeClass?.evaluations?.[0]?.question === "NA"
                       ? "0"
                       : courseData.beforeClass?.evaluations?.length || 0}
@@ -659,7 +659,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
                       : courseData.duringClass?.contents?.length || 0}
                   </li>
                   <li>
-                    <span className="font-bold text-primary-40">Evaluaciones:</span>{" "}
+                    <span className="font-bold text-primary-40">Preguntas:</span>{" "}
                     {courseData.duringClass?.evaluations?.[0]?.question === "NA"
                       ? "0"
                       : courseData.duringClass?.evaluations?.length || 0}
@@ -685,7 +685,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
                       : courseData.afterClass?.contents?.length || 0}
                   </li>
                   <li>
-                    <span className="font-bold text-primary-40">Evaluaciones:</span>{" "}
+                    <span className="font-bold text-primary-40">Preguntas:</span>{" "}
                     {courseData.afterClass?.evaluations?.[0]?.question === "NA"
                       ? "0"
                       : courseData.afterClass?.evaluations?.length || 0}
