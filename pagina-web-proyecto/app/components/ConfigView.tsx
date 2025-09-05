@@ -36,7 +36,7 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
         const data: Usuario[] = await res.json();
         setUsuarios(data.filter((u) => u.role !== "ADMIN"));
       } catch (err) {
-        console.error("Error al obtener usuarios:", err);
+        //console.error("Error al obtener usuarios:", err);
       }
     };
     fetchUsuarios();
@@ -88,7 +88,7 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
       setPassword("");
       setRole("STUDENT");
     } catch (error) {
-      console.error("Error registrando usuario:", error);
+      //console.error("Error registrando usuario:", error);
     }
   };
   

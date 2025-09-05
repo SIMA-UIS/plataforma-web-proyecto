@@ -20,10 +20,10 @@ export interface LoginResponse {
 export const registerUser = async (userData: User): Promise<any> => {
     try {
         const response = await axios.post(`${API_URL}/register`, userData);
-    console.log(response);
+    //console.log(response);
     return response.data;
     } catch (error) {
-        console.log(error)
+        //console.log(error)
     }
     
 };

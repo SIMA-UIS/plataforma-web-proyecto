@@ -39,7 +39,7 @@ export default function CrearExperiencia({
       const result = await response.json();
       return `${process.env.NEXT_PUBLIC_API_URL}${result.url}/index.html?token=${Cookies.get("token")}`;
     } catch (error) {
-      console.error("Error subiendo experiencia:", error);
+      //console.error("Error subiendo experiencia:", error);
       return null;
     }
   };
@@ -49,7 +49,7 @@ export default function CrearExperiencia({
     const url = await uploadExperienceToBackend(file);
     setIsUploading(false);
 
-    if (!url) return alert("Error al subir experiencia");
+    if (!url) {/*return alert("Error al subir experiencia");*/}
 
     const newExperience = {
       contentTitle: file.name.replace(".zip", ""),

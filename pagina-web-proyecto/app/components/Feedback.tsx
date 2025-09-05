@@ -248,8 +248,8 @@ export default function Feedback({ course, onClose }: { course: Course | null; o
         [editorStudent.username]: current,
       }));
     } catch (e) {
-      console.error(e);
-      alert("No se pudo guardar el feedback. Revisa la consola para detalles.");
+      //console.error(e);
+      //alert("No se pudo guardar el feedback. Revisa la consola para detalles.");
     } finally {
       setEditorLoading(false);
     }

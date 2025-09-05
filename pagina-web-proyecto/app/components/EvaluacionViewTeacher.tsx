@@ -12,7 +12,7 @@ if (token) {
     );
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 

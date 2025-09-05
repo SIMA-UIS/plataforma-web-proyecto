@@ -183,7 +183,7 @@ export default function ReuseView({ onCancel, onSave, targetCourse }: ReuseViewP
       });
     } catch (e: any) {
       setSaveError(e?.message || "Error guardando reuso");
-      console.error("Reuse save error:", e);
+      //console.error("Reuse save error:", e);
     } finally {
       setSaving(false);
     }

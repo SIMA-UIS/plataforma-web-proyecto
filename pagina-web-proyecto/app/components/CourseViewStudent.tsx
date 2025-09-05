@@ -34,7 +34,7 @@ const CourseViewStudent = ({ course, onClose }: CourseViewStudentProps) => {
             setBannerImage(objectURL);
           }
         } catch (err) {
-          console.error("Error al cargar imagen principal:", err);
+          //console.error("Error al cargar imagen principal:", err);
         }
       }
 
@@ -52,7 +52,7 @@ const CourseViewStudent = ({ course, onClose }: CourseViewStudentProps) => {
               const objectURL = URL.createObjectURL(blob);
               loadedImages[content.imageUrl] = objectURL;
             } catch (err) {
-              console.error("Error al cargar imagen de contenido:", err);
+              //console.error("Error al cargar imagen de contenido:", err);
             }
           }
         }) || []

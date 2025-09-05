@@ -56,7 +56,7 @@ export default function CreateCourse({ onCancel, onComplete }: CreateCourseProps
         // Filtramos los admins desde el inicio
         setUsuarios(data.filter((u) => u.role !== "ADMIN"));
       } catch (err) {
-        console.error("Error al obtener usuarios:", err);
+        //console.error("Error al obtener usuarios:", err);
       }
     };
     fetchUsuarios();
@@ -132,8 +132,8 @@ export default function CreateCourse({ onCancel, onComplete }: CreateCourseProps
       const data = await res.json();
       onComplete(data);
     } catch (err) {
-      alert("Error creando curso: " + err);
-      console.error(err);
+      //alert("Error creando curso: " + err);
+      //console.error(err);
     }
   };
 

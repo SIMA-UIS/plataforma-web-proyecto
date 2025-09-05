@@ -15,7 +15,7 @@ if (token) {
     const payload = JSON.parse(atob(token.split(".")[1]));
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 
@@ -96,7 +96,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
           setThirdTabCompleted(true);
         }
       })
-      .catch((err) => console.error("Error fetching grade:", err));
+      .catch((err) => {/*console.error("Error fetching grade:", err)*/});
   }, [username, course?.courseId, sectionKey]);
 
   // fetch existing progress
@@ -120,7 +120,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
           setThirdTabCompleted(section.evaluationCompleted ?? false);
         }
       })
-      .catch((err) => console.error("Error fetching progress:", err));
+      .catch((err) => {/*console.error("Error fetching progress:", err)*/});
   }, [username, course?.courseId, sectionKey]);
 
   // init content completion state
@@ -151,7 +151,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
             const blob = await res.blob();
             loaded[content.imageUrl] = URL.createObjectURL(blob);
           } catch (err) {
-            console.error("Error loading content image:", err);
+            //console.error("Error loading content image:", err);
           }
         })
       );
@@ -247,7 +247,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newProgress),
-    }).catch((err) => console.error("Error updating progress:", err));
+    }).catch((err) => {/*console.error("Error updating progress:", err)*/});
   };
 
   const confirmEvalModal = () => {

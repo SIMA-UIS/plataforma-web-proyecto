@@ -98,11 +98,11 @@ export default function CardList({
 
       if (!response.ok) throw new Error(`Failed to update course: ${response.statusText}`);
 
-      console.log("Datos guardados:", updatedCourse);
+      //console.log("Datos guardados:", updatedCourse);
       onCancel();
     } catch (error) {
-      console.error("Error al guardar el curso:", error);
-      alert(`Error al guardar: ${error instanceof Error ? error.message : "Ocurrió un error"}`);
+      //console.error("Error al guardar el curso:", error);
+      //alert(`Error al guardar: ${error instanceof Error ? error.message : "Ocurrió un error"}`);
     }
   };
 

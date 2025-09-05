@@ -62,20 +62,20 @@ export default function ReviewExperience({
         if (res.ok) {
           const json: ReviewExperienceData[] = await res.json();
 
-          console.log(json)
+          //console.log(json)
 
           // Filtrar por curso y obtener el más reciente
           const mostRecent = getMostRecentSimulation(json, nombreCurso);
 
           setData(mostRecent);
-          console.log(nombreCurso);
-          console.log("Lista completa:", json);
-          console.log("Simulación más reciente del curso:", mostRecent);
+          //console.log(nombreCurso);
+          //console.log("Lista completa:", json);
+          //console.log("Simulación más reciente del curso:", mostRecent);
         } else {
           setData(null);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        //console.error("Error fetching data:", error);
         setData(null);
       } finally {
         setLoading(false);

@@ -14,7 +14,7 @@ if (token) {
     const payload = JSON.parse(atob(token.split(".")[1]));
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 
@@ -102,7 +102,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
             const blob = await res.blob();
             loaded[content.imageUrl] = URL.createObjectURL(blob);
           } catch (err) {
-            console.error("Error loading content image:", err);
+            //console.error("Error loading content image:", err);
           }
         })
       );

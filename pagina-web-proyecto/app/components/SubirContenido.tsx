@@ -66,7 +66,7 @@ export default function SubirContenido({
       const result = await response.json();
       return `${process.env.NEXT_PUBLIC_API_URL}/media/files/${result.url}`;
     } catch (error) {
-      console.error("Error subiendo imagen:", error);
+      //console.error("Error subiendo imagen:", error);
       return null;
     }
   };
@@ -83,7 +83,7 @@ export default function SubirContenido({
       const local = URL.createObjectURL(blob);
       setImages((p) => ({ ...p, [url]: local }));
     } catch (err) {
-      console.warn("No se pudo cargar protected image", url, err);
+      //console.warn("No se pudo cargar protected image", url, err);
     }
   };
 
@@ -154,7 +154,7 @@ export default function SubirContenido({
       // preload protected image (so we have an object URL in images map)
       if (realUrl.startsWith("http")) await loadProtectedImage(realUrl);
     } else {
-      alert("Error al subir archivo");
+      //alert("Error al subir archivo");
     }
   };
 

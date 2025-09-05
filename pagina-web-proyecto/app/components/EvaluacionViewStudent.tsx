@@ -12,7 +12,7 @@ if (token) {
     );
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 
@@ -160,7 +160,7 @@ const EvaluacionViewStudent: React.FC<Props> = ({
         onComplete?.({ questions: sectionGrade.questions, grade });
         setOnCompleteFired(true);
       } catch (err) {
-        console.error(err);
+        //console.error(err);
       }
     };
 
@@ -238,13 +238,13 @@ const EvaluacionViewStudent: React.FC<Props> = ({
         });
 
         if (!postRes.ok) {
-          console.error("POST failed:", await postRes.text());
+          //console.error("POST failed:", await postRes.text());
         }
       } else if (!putRes.ok) {
-        console.error("PUT failed:", await putRes.text());
+        //console.error("PUT failed:", await putRes.text());
       }
     } catch (err) {
-      console.error("Error saving grade:", err);
+      //console.error("Error saving grade:", err);
     }
   };
 

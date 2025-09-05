@@ -13,7 +13,7 @@ if (token) {
     );
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 
@@ -145,13 +145,13 @@ const CourseDetailsStudent = ({
             const user: User = await res.json();
             loadedProfessors.push(user);
           } else if (res.status !== 404) {
-            console.error(`Error al obtener usuario ${username}:`, await res.text());
+            //console.error(`Error al obtener usuario ${username}:`, await res.text());
           }
         }
 
         setProfessors(loadedProfessors);
       } catch (err) {
-        console.error('Error al cargar información de los docentes:', err);
+        //console.error('Error al cargar información de los docentes:', err);
       }
     };
 
@@ -164,8 +164,8 @@ const CourseDetailsStudent = ({
       const token = Cookies.get('token');
       if (!token || !username) return;
 
-      console.log(courseId);
-      console.log(username);
+      //console.log(courseId);
+      //console.log(username);
 
       try {
         const res = await fetch(
@@ -176,11 +176,11 @@ const CourseDetailsStudent = ({
         );
         if (res.ok) {
           const data: Progress = await res.json();
-          console.log(data)
+          //console.log(data)
           setProgress(data);
         }
       } catch (err) {
-        console.error('Error al cargar progreso:', err);
+        //console.error('Error al cargar progreso:', err);
       }
     };
 

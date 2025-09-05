@@ -11,7 +11,7 @@ if (token) {
     );
     username = payload.sub;
   } catch (err) {
-    console.error("Error decoding token:", err);
+    //console.error("Error decoding token:", err);
   }
 }
 
@@ -48,7 +48,7 @@ const ActivityStudent: React.FC<ActivityStudentProps> = ({
         });
 
         if (!response.ok) {
-          console.error("Error cargando imagen protegida");
+          //console.error("Error cargando imagen protegida");
           return;
         }
 
@@ -56,7 +56,7 @@ const ActivityStudent: React.FC<ActivityStudentProps> = ({
         const objectURL = URL.createObjectURL(blob);
         setPreviewImage(objectURL);
       } catch (err) {
-        console.error("Error al cargar la imagen:", err);
+        //console.error("Error al cargar la imagen:", err);
       }
     };
 
@@ -79,14 +79,14 @@ const ActivityStudent: React.FC<ActivityStudentProps> = ({
         );
 
         if (!res.ok) {
-          console.error("Error fetching progress");
+          //console.error("Error fetching progress");
           return;
         }
 
         const data = await res.json();
         setProgress(data * 100); // response is a double
       } catch (err) {
-        console.error("Error fetching progress:", err);
+        //console.error("Error fetching progress:", err);
       }
     };
 

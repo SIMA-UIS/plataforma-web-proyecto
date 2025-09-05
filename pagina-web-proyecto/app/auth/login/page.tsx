@@ -32,7 +32,7 @@ const Login = () => {
     try {
       const response = await loginUser(formData);
       setSuccess("Inicio de sesión exitoso!");
-      console.log("Inicio de sesión exitoso:", response);
+      //console.log("Inicio de sesión exitoso:", response);
   
       if (response.token && response.role) {
         // Guardar token y rol en cookies para todo el dominio
@@ -49,7 +49,7 @@ const Login = () => {
         "Error al iniciar sesión: " +
           (error.response?.data?.message || error.message)
       );
-      console.error("Error al iniciar sesión:", error);
+      //console.error("Error al iniciar sesión:", error);
     }
   };
   

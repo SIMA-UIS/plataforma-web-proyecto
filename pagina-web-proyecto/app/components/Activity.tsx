@@ -44,7 +44,7 @@ const Activity = ({
 
         return () => URL.revokeObjectURL(objectURL);
       } catch (err) {
-        console.error("Error al cargar la imagen:", err);
+        //console.error("Error al cargar la imagen:", err);
       }
     };
 

@@ -72,7 +72,7 @@ export default function EditCourse({ course, onCancel, onComplete }: EditCourseP
           setStudents(studs);
         }
       } catch (err) {
-        console.error("Error al obtener usuarios:", err);
+        //console.error("Error al obtener usuarios:", err);
       }
     };
   
@@ -117,8 +117,8 @@ export default function EditCourse({ course, onCancel, onComplete }: EditCourseP
       const data = await res.json();
       onComplete(data);
     } catch (err) {
-      alert("Error actualizando curso: " + err);
-      console.error(err);
+      //alert("Error actualizando curso: " + err);
+      //console.error(err);
     }
   };
 

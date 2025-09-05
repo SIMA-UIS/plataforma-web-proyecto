@@ -94,7 +94,7 @@ const Dashboard = () => {
         const data: Course[] = await response.json();
         setCourses(data);
       } catch (error) {
-        console.error("Error al obtener cursos:", error);
+        //console.error("Error al obtener cursos:", error);
         setError(error instanceof Error ? error.message : "An error occurred");
       } finally {
         setLoading(false);
@@ -112,7 +112,7 @@ const Dashboard = () => {
       Cookies.remove("role");
       router.push("/auth/login");
     } catch (err) {
-      console.error("Logout failed", err);
+      //console.error("Logout failed", err);
     }
   };
 
@@ -145,7 +145,7 @@ const Dashboard = () => {
 
   // 📋 Clonar
   const handleCourseClone = (course: Course) => {
-    console.log("Clonar curso:", course);
+    //console.log("Clonar curso:", course);
     // Aquí puedes abrir un Wizard con data precargada o crear un duplicado
   };
 
@@ -161,7 +161,7 @@ const Dashboard = () => {
   };
 
   const handleWizardComplete = (data: WizardData) => {
-    console.log("Datos del curso:", data);
+    //console.log("Datos del curso:", data);
     setShowWizard(false);
     setSelectedCourse(null);
   };
@@ -340,11 +340,11 @@ const Dashboard = () => {
                 setSelectedCourse(null);
               }}
               onSave={async ({ sourceCourseId, targetCourseId, reuse }) => {
-                console.log("Reuso guardado:", {
+                /*console.log("Reuso guardado:", {
                   sourceCourseId,
                   targetCourseId,
                   reuse,
-                });
+                });*/
                 // refrescar cursos después de guardar
                 try {
                   const token = Cookies.get("token");
@@ -359,7 +359,7 @@ const Dashboard = () => {
                     setCourses(data);
                   }
                 } catch (e) {
-                  console.error("No se pudieron refrescar los cursos", e);
+                  //console.error("No se pudieron refrescar los cursos", e);
                 }
                 setShowReuse(false);
                 setSelectedCourse(null);

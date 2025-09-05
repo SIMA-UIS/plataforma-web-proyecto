@@ -13,7 +13,7 @@ if (token) {
         );
         username = payload.sub;
     } catch (err) {
-        console.error("Error decoding token:", err);
+        //console.error("Error decoding token:", err);
     }
 }
 
@@ -123,13 +123,13 @@ const CourseDetailsStudent = ({
                         const user: User = await res.json();
                         loadedProfessors.push(user);
                     } else if (res.status !== 404) {
-                        console.error(`Error al obtener usuario ${username}:`, await res.text());
+                        //console.error(`Error al obtener usuario ${username}:`, await res.text());
                     }
                 }
 
                 setProfessors(loadedProfessors);
             } catch (err) {
-                console.error('Error al cargar información de los docentes:', err);
+                //console.error('Error al cargar información de los docentes:', err);
             }
         };
 

@@ -242,16 +242,16 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
 
       if (!response.ok)
         throw new Error(`Failed to update course: ${response.statusText}`);
-      console.log("Datos guardados:", courseData);
+      //console.log("Datos guardados:", courseData);
 
       // Avanza al siguiente paso si todo fue bien
       if (step < 5) setStep(step + 1);
     } catch (error) {
-      console.error("Error al guardar el curso:", error);
-      alert(
+      //console.error("Error al guardar el curso:", error);
+      /*alert(
         `Error al guardar: ${error instanceof Error ? error.message : "Ocurrió un error"
         }`
-      );
+      );*/
     }
   };
 
@@ -311,11 +311,11 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
             Authorization: `Bearer ${token}`,
           },
         }).then((res) => {
-          if (!res.ok) console.warn("No se pudo eliminar la imagen anterior");
+          if (!res.ok) {/*console.warn("No se pudo eliminar la imagen anterior");*/}
         });
       }
     } else {
-      alert("Error al subir imagen");
+      //alert("Error al subir imagen");
     }
   };
 
@@ -342,7 +342,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
       const result = await response.json(); // { url: "/media/files/nombre.jpg" }
       return `${process.env.NEXT_PUBLIC_API_URL}/media/files/${result.url}`;
     } catch (error) {
-      console.error("Error subiendo imagen:", error);
+      //console.error("Error subiendo imagen:", error);
       return null;
     }
   };
@@ -356,7 +356,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
     });
 
     if (!response.ok) {
-      console.error("Error cargando imagen protegida");
+      //console.error("Error cargando imagen protegida");
       return;
     }
 

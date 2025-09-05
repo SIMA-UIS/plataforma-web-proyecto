@@ -25,7 +25,7 @@ export default function CrearInstrucciones({
 
   // ✅ observar courseData (no setCourseData)
   useEffect(() => {
-    console.log("CrearInstrucciones", courseData);
+    //console.log("CrearInstrucciones", courseData);
   }, [courseData]);
 
   // asegúrate de tener estructura por defecto
