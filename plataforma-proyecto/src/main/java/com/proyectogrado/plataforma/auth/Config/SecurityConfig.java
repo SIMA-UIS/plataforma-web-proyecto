@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/auth/**", "/api/v1/demo").permitAll() // Permite acceso sin autenticación a estas rutas
                         .requestMatchers(HttpMethod.GET, "/media/experiences/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/media/files/**").permitAll()
                         .anyRequest().authenticated() // El resto de las rutas requieren autenticación
                 )
                 .headers(headers -> headers.frameOptions().disable())
