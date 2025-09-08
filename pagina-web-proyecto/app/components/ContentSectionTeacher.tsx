@@ -184,44 +184,6 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
     }));
   };
 
-  // helper function to fetch and cache protected images
-  const loadProtectedImage = async (url: string, token: string, cache: Record<string, string>) => {
-    if (!url || url.startsWith("blob:") || cache[url]) return null;
-    try {
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) return null;
-      const blob = await res.blob();
-      return URL.createObjectURL(blob);
-    } catch (err) {
-      return null;
-    }
-  };
-
-  // preload images for the section
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (!token) return;
-
-    (async () => {
-      const contents = currentSection?.contents || [];
-      const loaded: Record<string, string> = {};
-
-      await Promise.all(
-        contents.map(async (content: any) => {
-          if (content.imageUrl && !content.imageUrl.startsWith("blob:")) {
-            const local = await loadProtectedImage(content.imageUrl, token, images);
-            if (local) loaded[content.imageUrl] = local;
-          }
-        })
-      );
-
-      // merge with existing cache so we don’t lose previously preloaded URLs
-      setImages((prev) => ({ ...prev, ...loaded }));
-    })();
-  }, [course, title]);
-  
   return (
     <>
       <div className="w-full px-6 py-6 space-y-6 bg-white">
