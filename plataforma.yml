@@ -37,8 +37,6 @@ services:
       - TEST_BASE_URI="http://server"
       - TEST_PORT="8081"
       - MONGODB_URI=mongodb://mongodb:27017
-    volumes:
-      - uploads_data:/app/uploads
     depends_on:
       mongodb:
         condition: service_healthy
@@ -96,7 +94,6 @@ services:
 
 volumes:
   mongo_data:
-  uploads_data:
 
 networks:
   plataforma-web-proyecto_app_network:
