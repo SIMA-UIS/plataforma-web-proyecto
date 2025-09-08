@@ -87,22 +87,32 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
   useEffect(() => {
     const loadImages = async () => {
       const token = Cookies.get("token");
-      if (!token) return;
       const contents = currentSection?.contents || [];
       const loaded: Record<string, string> = {};
 
       await Promise.all(
         contents.map(async (content: any) => {
           if (!content.imageUrl || content.imageUrl.startsWith("blob:")) return;
-          try {
-            const res = await fetch(content.imageUrl, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
-            if (!res.ok) return;
-            const blob = await res.blob();
-            loaded[content.imageUrl] = URL.createObjectURL(blob);
-          } catch (err) {
-            //console.error("Error loading content image:", err);
+
+          // ✅ If it's a public URL, skip preload
+          if (content.imageUrl.startsWith("http") && !content.imageUrl.includes("protected-path")) {
+            // just use the URL directly
+            loaded[content.imageUrl] = content.imageUrl;
+            return;
+          }
+
+          // 🔒 Otherwise fetch with token (protected resource)
+          if (token) {
+            try {
+              const res = await fetch(content.imageUrl, {
+                headers: { Authorization: `Bearer ${token}` },
+              });
+              if (!res.ok) return;
+              const blob = await res.blob();
+              loaded[content.imageUrl] = URL.createObjectURL(blob);
+            } catch (err) {
+              //console.error("Error loading content image:", err);
+            }
           }
         })
       );
@@ -342,7 +352,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
                             : "unknown";
                           const imageSrc = content?.imageUrl?.startsWith("blob:")
                             ? content.imageUrl
-                            : (content?.imageUrl ? images[content.imageUrl] : "");
+                            : images[content.imageUrl] || content.imageUrl;
 
                           return (
                             <>
