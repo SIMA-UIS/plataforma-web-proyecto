@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,47 +25,28 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         try {
-            // Attempt to authenticate the user
-            authenticationManager.authenticate(
+            // Authenticate the user (loads from DB via UserDetailsService)
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
 
-            // Fetch the user from the database
-            User user = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-
-            // Check if the user is enabled and not locked
-            if (!user.isEnabled()) {
-                return AuthResponse.builder()
-                        .token("")
-                        .message("User account is disabled.")
-                        .role("")
-                        .build();
-            }
-
-            if (!user.isAccountNonLocked()) {
-                return AuthResponse.builder()
-                        .token("")
-                        .message("User account is locked.")
-                        .role("")
-                        .build();
-            }
+            // Get the authenticated user (already loaded from DB)
+            User user = (User) authentication.getPrincipal();
 
             // Generate the token
             String token = jwtService.getToken(user);
 
-            // Include the role in the response
             return AuthResponse.builder()
                     .token(token)
-                    .role(user.getRole().name()) // Agrega el rol aquí
-                    .message("") // No message in successful login
+                    .role(user.getRole().name())
+                    .message("")
                     .build();
 
         } catch (AuthenticationException e) {
             return AuthResponse.builder()
-                    .token("") // Empty token since authentication failed
+                    .token("")
                     .message("Invalid username or password.")
-                    .role("") // Rol vacío en caso de error
+                    .role("")
                     .build();
         } catch (DataAccessException e) {
             return AuthResponse.builder()
