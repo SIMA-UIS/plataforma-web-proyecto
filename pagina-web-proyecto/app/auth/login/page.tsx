@@ -28,17 +28,20 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-  
+
     try {
+      console.time("login request");
       const response = await loginUser(formData);
+      console.timeEnd("login request");
+      
       setSuccess("Inicio de sesión exitoso!");
       //console.log("Inicio de sesión exitoso:", response);
-  
+
       if (response.token && response.role) {
         // Guardar token y rol en cookies para todo el dominio
         Cookies.set("token", response.token, { path: "/" });
         Cookies.set("role", response.role, { path: "/" });
-  
+
         // Redirigir al home
         router.push("/home");
       } else {
@@ -47,12 +50,12 @@ const Login = () => {
     } catch (error: any) {
       setError(
         "Error al iniciar sesión: " +
-          (error.response?.data?.message || error.message)
+        (error.response?.data?.message || error.message)
       );
       //console.error("Error al iniciar sesión:", error);
     }
   };
-  
+
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
