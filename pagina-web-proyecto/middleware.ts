@@ -2,35 +2,27 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token'); // Obtiene el token de las cookies
-  const role = request.cookies.get('role');
+  const token = request.cookies.get('token');
   const { pathname } = request.nextUrl;
 
-  // Rutas públicas que no requieren autenticación
+  // Public routes (no login required)
   const publicPaths = ['/auth/login', '/auth/register', '/'];
 
-  const publicAuthPaths = ['/auth/login'];
-
-  if (token) {
-    // Si hay un token y el usuario intenta acceder a una ruta pública, redirige a /home
-    if (publicPaths.includes(pathname)) {
-      return NextResponse.redirect(new URL('/home', request.url));
-    }
-  } else {
-    // Si no hay un token y el usuario intenta acceder a una ruta privada, redirige a /auth/login
-    if (!publicAuthPaths.includes(pathname)) {
-      return NextResponse.redirect(new URL('/auth/login', request.url));
-    }
+  // If user is logged in and tries to access login/register → send to home
+  if (token && publicPaths.includes(pathname)) {
+    return NextResponse.redirect(new URL('/home', request.url));
   }
 
-  // Si ninguna condición se cumple, permite el acceso
+  // If user is not logged in and tries to access a protected route → send to login
+  if (!token && !publicPaths.includes(pathname)) {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
+
   return NextResponse.next();
 }
 
-// Configuración de las rutas a las que se aplicará el middleware
 export const config = {
   matcher: [
-    // Se aplica a todas las rutas excepto las específicas de API y recursos estáticos
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
