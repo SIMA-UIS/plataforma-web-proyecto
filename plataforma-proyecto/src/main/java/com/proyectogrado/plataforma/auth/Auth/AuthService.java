@@ -26,14 +26,9 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         try {
             // Authenticate the user (loads from DB via UserDetailsService)
-
-            long start = System.currentTimeMillis();
-
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
-
-            System.out.println("Auth time: " + (System.currentTimeMillis() - start) + " ms");
 
             // Get the authenticated user (already loaded from DB)
             User user = (User) authentication.getPrincipal();
