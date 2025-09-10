@@ -12,6 +12,7 @@ interface CrearInstruccionesProps {
   ) => void;
   name: string;
   hasSimulation: boolean;
+  activeCardId: number | null;
 }
 
 export default function CrearInstrucciones({
@@ -19,6 +20,7 @@ export default function CrearInstrucciones({
   setCourseData,
   handleInputChange,
   name,
+  activeCardId,
   hasSimulation,
 }: CrearInstruccionesProps) {
   const [step, setStep] = useState<number>(1);
@@ -69,7 +71,7 @@ export default function CrearInstrucciones({
       <hr className="mb-4 border-gray-300" />
 
       <div className="space-y-3">
-        <label className="block font-medium mb-1">Nombre de la actividad</label>
+        <label className="block font-medium mb-1">{(activeCardId == 1 ? "Nombre" : "Objetivo") +  " de la actividad"}</label>
         <input
           type="text"
           name={`${name}.instructions.instructionTitle`}

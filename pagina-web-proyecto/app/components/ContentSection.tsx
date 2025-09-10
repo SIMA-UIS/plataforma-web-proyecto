@@ -73,9 +73,9 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
   } as const;
 
   const titleMap = {
-    "Antes de clase": "Prebriefing",
-    "Durante la clase": "Briefing",
-    "Después de la clase": "Debriefing",
+    "Antes de clase": "Aula Invertida",
+    "Durante la clase": "Taller de Habilidad",
+    "Después de la clase": "Actividad Experiencial",
   } as const;
 
   const currentSection = sectionMap[title];
