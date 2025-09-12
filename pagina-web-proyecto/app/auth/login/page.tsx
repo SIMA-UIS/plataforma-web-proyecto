@@ -28,17 +28,17 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-  
+
     try {
       const response = await loginUser(formData);
       setSuccess("Inicio de sesión exitoso!");
       //console.log("Inicio de sesión exitoso:", response);
-  
+
       if (response.token && response.role) {
         // Guardar token y rol en cookies para todo el dominio
         Cookies.set("token", response.token, { path: "/" });
         Cookies.set("role", response.role, { path: "/" });
-  
+
         // Redirigir al home
         router.push("/home");
       } else {
@@ -47,19 +47,22 @@ const Login = () => {
     } catch (error: any) {
       setError(
         "Error al iniciar sesión: " +
-          (error.response?.data?.message || error.message)
+        (error.response?.data?.message || error.message)
       );
       //console.error("Error al iniciar sesión:", error);
     }
   };
-  
+
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
       {/* Navbar */}
       <nav className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-xl font-bold text-primary-40">EduLMS</div>
+          {/* Logo */}
+          <div className="text-xl font-bold text-primary-40">
+            <img src="logo.png" alt="EduLMS Logo" className="h-8 w-auto" />
+          </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">¿No tienes cuenta?</span>
             <button className="border border-primary-40 text-primary-40 px-4 py-2 rounded-md hover:bg-primary-40 hover:text-white transition-colors duration-300">
