@@ -309,7 +309,7 @@ export default function CrearEvaluacion({
             <div className="relative">
               <button
                 onClick={() => setShowTypePicker((s) => !s)}
-                className="flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
+                className="inline-flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
              rounded-xl mt-3 font-medium shadow-sm hover:bg-primary-40 hover:text-white 
              active:scale-95 transition"
               >
@@ -331,8 +331,8 @@ export default function CrearEvaluacion({
 
             <button
               onClick={omitEvaluation}
-              className="flex items-center gap-2 px-4 py-2 border-2 border-gray-500 text-white bg-gray-400 
-             rounded-xl mt-3 font-medium shadow-sm hover:bg-gray-600 hover:text-white 
+              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-gray-500 text-white bg-gray-400 
+             rounded-xl mt-3 font-medium shadow-sm text-center hover:bg-gray-600 hover:text-white 
              active:scale-95 transition"
             >
               Omitir evaluación

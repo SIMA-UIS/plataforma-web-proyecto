@@ -131,7 +131,7 @@ export default function CrearInstrucciones({
           <button
             type="button"
             onClick={addStep}
-            className="flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
              rounded-xl mt-3 font-medium shadow-sm hover:bg-primary-40 hover:text-white 
              active:scale-95 transition"
           >
