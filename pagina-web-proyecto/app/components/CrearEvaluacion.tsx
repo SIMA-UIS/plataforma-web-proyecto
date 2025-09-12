@@ -305,7 +305,7 @@ export default function CrearEvaluacion({
           </div>
 
           {/* Botonera */}
-          <div className="flex justify-center mt-6 relative">
+          <div className="flex justify-center gap-4 mt-6 relative">
             <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center w-full sm:w-auto">
               {/* Agregar pregunta */}
               <div className="relative w-full sm:w-auto">
@@ -320,8 +320,8 @@ export default function CrearEvaluacion({
 
                 {showTypePicker && (
                   <div
-                    className="absolute z-10 mt-2 w-full sm:w-64 bg-white border border-gray-300 
-                     rounded-lg shadow p-2 left-0"
+                    className="absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-full sm:w-64 bg-white 
+                     border border-gray-300 rounded-lg shadow p-2"
                   >
                     <p className="text-sm font-medium px-2 py-1 text-gray-700">Tipo de pregunta</p>
                     <div className="flex flex-col">
