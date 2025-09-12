@@ -327,16 +327,16 @@ export default function CrearEvaluacion({
                   </div>
                 </div>
               )}
-            </div>
 
-            <button
-              onClick={omitEvaluation}
-              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-gray-500 text-white bg-gray-400 
+              <button
+                onClick={omitEvaluation}
+                className="inline-flex items-center gap-2 px-4 py-2 border-2 border-gray-500 text-white bg-gray-400 
              rounded-xl mt-3 font-medium shadow-sm text-center hover:bg-gray-600 hover:text-white 
              active:scale-95 transition"
-            >
-              Omitir evaluación
-            </button>
+              >
+                Omitir evaluación
+              </button>
+            </div>
           </div>
         </>
       )}
