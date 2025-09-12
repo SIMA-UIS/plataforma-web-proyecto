@@ -305,23 +305,23 @@ export default function CrearEvaluacion({
           </div>
 
           {/* Botonera */}
-          <div className="flex justify-center gap-4 mt-6 relative">
+          <div className="flex justify-center gap-4 mt-6">
             <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center w-full sm:w-auto">
-              {/* Agregar pregunta */}
-              <div className="relative w-full sm:w-auto">
+              {/* Agregar pregunta + picker wrapper */}
+              <div className="relative w-full sm:w-auto inline-block">
                 <button
                   onClick={() => setShowTypePicker((s) => !s)}
                   className="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-4 py-2 border-2 
-                   border-primary-40 text-primary-40 bg-white rounded-xl font-medium shadow-sm 
-                   hover:bg-primary-40 hover:text-white active:scale-95 transition"
+         border-primary-40 text-primary-40 bg-white rounded-xl font-medium shadow-sm 
+         hover:bg-primary-40 hover:text-white active:scale-95 transition"
                 >
                   <FaPlus /> Agregar pregunta
                 </button>
 
                 {showTypePicker && (
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 z-10 mt-2 w-full sm:w-64 bg-white 
-                     border border-gray-300 rounded-lg shadow p-2"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 
+                     w-64 sm:w-64 bg-white border border-gray-300 rounded-lg shadow p-2"
                   >
                     <p className="text-sm font-medium px-2 py-1 text-gray-700">Tipo de pregunta</p>
                     <div className="flex flex-col">
@@ -338,8 +338,8 @@ export default function CrearEvaluacion({
               <button
                 onClick={omitEvaluation}
                 className="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-4 py-2 
-                 border-2 border-gray-500 text-white bg-gray-400 rounded-xl font-medium shadow-sm 
-                 hover:bg-gray-600 hover:text-white active:scale-95 transition"
+       border-2 border-gray-500 text-white bg-gray-400 rounded-xl font-medium shadow-sm 
+       hover:bg-gray-600 hover:text-white active:scale-95 transition"
               >
                 Omitir evaluación
               </button>
