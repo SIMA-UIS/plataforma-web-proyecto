@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { loginUser, User } from "../../api/auth";
 import Link from "next/link";
-import Image from "next/image";
-import logo from "./logo.png";
 
 const Login = () => {
   const router = useRouter();
@@ -61,10 +59,7 @@ const Login = () => {
       {/* Navbar */}
       <nav className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <div className="h-8 w-auto">
-            <Image src={logo} alt="EduLMS Logo" className="object-contain" />
-          </div>
+          <div className="text-xl font-bold text-primary-40">EduLMS</div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">¿No tienes cuenta?</span>
             <button className="border border-primary-40 text-primary-40 px-4 py-2 rounded-md hover:bg-primary-40 hover:text-white transition-colors duration-300">
