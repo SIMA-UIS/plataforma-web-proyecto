@@ -61,7 +61,7 @@ const Login = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="text-xl font-bold text-primary-40">
-            <img src="logo.png" alt="EduLMS Logo" className="h-8 w-auto" />
+            <img src="/logo.png" alt="EduLMS Logo" className="h-8 w-auto" />
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">¿No tienes cuenta?</span>
