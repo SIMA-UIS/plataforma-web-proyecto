@@ -368,9 +368,9 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
   const renderStepper = () => {
     const steps = [
       "Identificación del curso",
-      "Aula Invertida",
-      "Taller de Habilidad",
-      "Actividad Experiencial",
+      "Prebriefing", //"Aula Invertida",
+      "Briefing", //"Taller de Habilidad",
+      "Debriefing", //"Actividad Experiencial",
       "Revisión",
     ];
 
@@ -498,7 +498,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
             {activeCardId === null && (
               <>
                 <h2 className="text-lg mb-3 font-semibold text-primary-40">Primer momento</h2>
-                <h3 className="text-3xl mb-2 font-bold">Aula Invertida</h3>
+                <h3 className="text-3xl mb-2 font-bold">Prebriefing</h3>
                 <p className="mb-4 text-justify text-gray-600">
                   Este momento ayudará a los estudiantes a nivelarse teóricamente y a familiarizarse con los acuerdos que guiarán la simulación, de modo que estén preparados para lo que enfrentarán.
                 </p>
@@ -534,7 +534,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
             {activeCardId === null && (
               <>
                 <h2 className="text-lg mb-3 font-semibold text-primary-40">Segundo momento</h2>
-                <h3 className="text-3xl mb-2 font-bold">Taller de Habilidad</h3>
+                <h3 className="text-3xl mb-2 font-bold">Briefing</h3>
                 <p className="mb-4 text-justify text-gray-600">
                   Este momento ayudará a los estudiantes a comprender el contexto del caso clínico, la información necesaria sobre la situación que enfrentarán, las limitaciones de la simulación y el uso adecuado de los recursos.
                 </p>
@@ -570,7 +570,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
             {activeCardId === null && (
               <>
                 <h2 className="text-lg mb-3 font-semibold text-primary-40">Tercer momento</h2>
-                <h3 className="text-3xl mb-2 font-bold">Actividad Experiencial</h3>
+                <h3 className="text-3xl mb-2 font-bold">Debriefing</h3>
                 <p className="mb-4 text-justify text-gray-600">
                   Este momento ayudará a los estudiantes a consolidar los conocimientos adquiridos en la simulación, orientándolos sobre qué reflexionar y cómo aprovechar los recursos disponibles para profundizar en su aprendizaje.
                 </p>

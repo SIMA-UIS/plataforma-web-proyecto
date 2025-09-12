@@ -75,12 +75,6 @@ export default function CardList({
     },
   ];
 
-  if (name === "beforeClass") {
-    const temp = cards[1];
-    cards[1] = cards[0];
-    cards[0] = temp;
-  }
-
   const handleSave = async () => {
     try {
       const token = Cookies.get("token");
@@ -94,13 +88,13 @@ export default function CardList({
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}`,
         {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedCourse),
-        });
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedCourse),
+      });
 
       if (!response.ok) throw new Error(`Failed to update course: ${response.statusText}`);
 
@@ -184,7 +178,7 @@ export default function CardList({
                 <p
                   className={`text-sm px-2 py-1 rounded ${
                     card.isFilled ? "text-green-700 bg-green-100" : "text-gray-600 bg-gray-200"
-                    } inline-block`}
+                  } inline-block`}
                 >
                   {card.isFilled ? "Completado" : "Pendiente"}
                 </p>
@@ -202,7 +196,6 @@ export default function CardList({
               handleInputChange={handleInputChange}
               name={name}
               hasSimulation={course.isPublic}
-              activeCardId={activeCardId}
             />
           ) : activeCardId === 2 && name === "afterClass" ? (
             <CrearExperiencia courseData={courseData} setCourseData={setCourseData} hasSimulation={course.isPublic} />

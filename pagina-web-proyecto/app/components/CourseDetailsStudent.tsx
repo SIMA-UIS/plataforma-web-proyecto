@@ -214,7 +214,7 @@ const CourseDetailsStudent = ({
 
   const sectionData = [
     {
-      title: 'Aula Invertida',
+      title: 'Prebriefing',
       description:
         'En este espacio podrás reforzar la parte teórica y conocer los acuerdos que guiarán la simulación, de modo que llegues preparado para la experiencia.',
       section: course.beforeClass,
@@ -222,7 +222,7 @@ const CourseDetailsStudent = ({
       progressKey: 'aulaInvertida' as const,
     },
     {
-      title: 'Taller de Habilidad',
+      title: 'Briefing',
       description:
         'Aquí encontrarás información clave sobre el caso clínico, la situación a enfrentar, las limitaciones de la simulación y el uso adecuado de los recursos.',
       section: course.duringClass,
@@ -230,7 +230,7 @@ const CourseDetailsStudent = ({
       progressKey: 'tallerHabilidad' as const,
     },
     {
-      title: 'Actividad Experiencial',
+      title: 'Debriefing',
       description:
         'En esta sección podrás reflexionar sobre tu experiencia, consolidar lo aprendido y utilizar recursos que te ayudarán a profundizar en los conocimientos adquiridos durante la simulación.',
       section: course.afterClass,
