@@ -133,16 +133,16 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
   }, [currentSection]);
 
   // preload images with token
-    useEffect(() => {
-      const loadImages = async () => {
-        const token = Cookies.get("token");
+  useEffect(() => {
+    const loadImages = async () => {
+      const token = Cookies.get("token");
       if (!token) return;
-        const contents = currentSection?.contents || [];
-        const loaded: Record<string, string> = {};
-  
-        await Promise.all(
-          contents.map(async (content: any) => {
-            if (!content.imageUrl || content.imageUrl.startsWith("blob:")) return;
+      const contents = currentSection?.contents || [];
+      const loaded: Record<string, string> = {};
+
+      await Promise.all(
+        contents.map(async (content: any) => {
+          if (!content.imageUrl || content.imageUrl.startsWith("blob:")) return;
   
             // ✅ If it's a public URL, skip preload
             if (content.imageUrl.startsWith("http") && !content.imageUrl.includes("protected-path")) {
@@ -153,23 +153,23 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
   
             // 🔒 Otherwise fetch with token (protected resource)
             if (token) {
-              try {
-                const res = await fetch(content.imageUrl, {
-                  headers: { Authorization: `Bearer ${token}` },
-                });
-                if (!res.ok) return;
-                const blob = await res.blob();
-                loaded[content.imageUrl] = URL.createObjectURL(blob);
-              } catch (err) {
+          try {
+            const res = await fetch(content.imageUrl, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) return;
+            const blob = await res.blob();
+            loaded[content.imageUrl] = URL.createObjectURL(blob);
+          } catch (err) {
                 //console.error("Error loading content image:", err);
               }
-            }
-          })
-        );
-        setImages(loaded);
-      };
-      loadImages();
-    }, [course, title]);
+          }
+        })
+      );
+      setImages(loaded);
+    };
+    loadImages();
+  }, [course, title]);
 
   const toggleInstructions = () => {
     const next = !instructionsCompleted;
@@ -480,7 +480,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
 
                           return (
                             <>
-                              <h4 className="text-lg font-semibold text-primary-10 text-center">
+                              <h4 className="text-lg font-semibold text-center">
                                 {content.contentTitle}
                               </h4>
                               <hr />
@@ -568,7 +568,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
                           Anterior
                         </button>
 
-                        <span className="text-sm text-primary-20">
+                        <span className="text-sm text-gray-600">
                           {activeIndex + 1} de {contents.length}
                         </span>
 
@@ -643,7 +643,7 @@ const ContentSection = ({ title, onBack, course }: ContentSectionProps) => {
               </button>
               <button
                 onClick={confirmEvalModal}
-                className="px-3 sm:px-4 py-2 rounded-lg bg-primary-40 text-white hover:bg-primary-60 text-sm sm:text-base w-full sm:w-auto"
+                className="px-3 sm:px-4 py-2 rounded-lg bg-primary-40 text-white hover:bg-primary-50 text-sm sm:text-base w-full sm:w-auto"
               >
                 Continuar
               </button>

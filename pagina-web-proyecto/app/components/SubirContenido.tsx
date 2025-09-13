@@ -309,7 +309,7 @@ export default function SubirContenido({
 
                 <button
                   onClick={() => moveModule(moduleName, "up")}
-                  className="p-2 bg-primary-40 text-white rounded-md hover:bg-primary-60 transition"
+                  className="p-2 bg-primary-40 text-white rounded-md hover:bg-primary-50 transition"
                   title="Mover sección arriba"
                 >
                   <FaArrowUp />
@@ -317,7 +317,7 @@ export default function SubirContenido({
 
                 <button
                   onClick={() => moveModule(moduleName, "down")}
-                  className="p-2 bg-primary-40 text-white rounded-md hover:bg-primary-60 transition"
+                  className="p-2 bg-primary-40 text-white rounded-md hover:bg-primary-50 transition"
                   title="Mover sección abajo"
                 >
                   <FaArrowDown />

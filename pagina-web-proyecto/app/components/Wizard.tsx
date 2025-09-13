@@ -631,7 +631,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
   return (
     <div className="bg-white p-2">
       <div className="mb-6 max-w-5xl mx-auto w-full">
-        <button onClick={onCancel} className="text-primary-40">
+        <button onClick={onCancel} className="text-primary-10">
           <span className="text-base">←</span> Salir
         </button>
       </div>
@@ -654,7 +654,7 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
             {step > 1 && (
               <button
                 onClick={prevStep}
-                className="w-full sm:w-auto px-4 py-2 border border-gray-500 text-gray-500 bg-white rounded hover:bg-gray-100"
+                className="w-full sm:w-auto px-4 py-2 border border-primary-40 text-primary-40 bg-white rounded hover:bg-gray-100"
               >
                 Anterior
               </button>

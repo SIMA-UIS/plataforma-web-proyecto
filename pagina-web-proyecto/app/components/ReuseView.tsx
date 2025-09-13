@@ -193,7 +193,7 @@ export default function ReuseView({ onCancel, onSave, targetCourse }: ReuseViewP
     <div className="flex-1 p-6 space-y-6 bg-white shadow-none border-none">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <button onClick={onCancel} className="text-sm text-primary-40 hover:underline mb-4">
+          <button onClick={onCancel} className="text-sm text-primary-10 hover:underline mb-4">
             ← Volver al curso
           </button>
           <h2 className="text-3xl font-bold text-gray-800">Reutilización de Cursos</h2>

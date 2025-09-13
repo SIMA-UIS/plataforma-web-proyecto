@@ -121,7 +121,7 @@ export default function CrearInstrucciones({
               <button
                 type="button"
                 onClick={() => removeStep(index)}
-                className="p-2 rounded-full bg-primary-80 text-primary-40 transition hover:bg-red-500 hover:text-white"
+                className="p-2 rounded-full bg-primary-60 text-primary-40 transition hover:bg-red-500 hover:text-white"
               >
                 <FaTrash className="w-5 h-5" />
               </button>
@@ -131,7 +131,7 @@ export default function CrearInstrucciones({
           <button
             type="button"
             onClick={addStep}
-            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
+            className="flex items-center gap-2 px-4 py-2 border-2 border-primary-40 text-primary-40 bg-white 
              rounded-xl mt-3 font-medium shadow-sm hover:bg-primary-40 hover:text-white 
              active:scale-95 transition"
           >

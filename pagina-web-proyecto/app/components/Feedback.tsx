@@ -408,7 +408,7 @@ export default function Feedback({ course, onClose }: { course: Course | null; o
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => onOpenEditor(r)}
-                            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-30"
+                            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-50"
                           >
                             Retroalimentar
                           </button>
@@ -447,7 +447,7 @@ export default function Feedback({ course, onClose }: { course: Course | null; o
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => onOpenEditor(r)}
-                      className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-30"
+                      className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-50"
                     >
                       Retroalimentar
                     </button>
@@ -477,14 +477,14 @@ export default function Feedback({ course, onClose }: { course: Course | null; o
         {activeIndex < orderedMoments.length - 1 ? (
           <button
             onClick={next}
-            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-30 text-sm"
+            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-50 text-sm"
           >
             Siguiente
           </button>
         ) : (
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-30 text-sm"
+            className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-50 text-sm"
           >
             Finalizar
           </button>
@@ -609,7 +609,7 @@ export default function Feedback({ course, onClose }: { course: Course | null; o
               <button
                 onClick={onSaveFeedback}
                 disabled={editorLoading || !editorGrade}
-                className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-30 text-sm disabled:opacity-50"
+                className="px-4 py-2 rounded bg-primary-40 text-white hover:bg-primary-50 text-sm disabled:opacity-50"
               >
                 {editorLoading ? "Guardando..." : "Guardar"}
               </button>

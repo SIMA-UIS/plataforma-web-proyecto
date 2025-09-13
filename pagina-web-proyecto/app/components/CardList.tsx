@@ -128,7 +128,7 @@ export default function CardList({
 
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center"
+        className="fixed inset-0 z-50 flex items-center justify-center text-center"
         aria-modal="true"
         role="dialog"
         onKeyDown={(e) => {
@@ -144,7 +144,7 @@ export default function CardList({
           <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
           <p className="mt-2 text-sm text-gray-600">{message}</p>
 
-          <div className="mt-6 flex justify-end gap-3">
+          <div className="mt-6 flex justify-end gap-3 items-center justify-center">
             <button
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded hover:bg-gray-100"
@@ -177,13 +177,13 @@ export default function CardList({
                 <h2 className="text-lg font-bold">{card.title}</h2>
                 <p
                   className={`text-sm px-2 py-1 rounded ${
-                    card.isFilled ? "text-green-700 bg-green-100" : "text-gray-600 bg-gray-200"
+                    card.isFilled ? "text-primary-40 bg-primary-60" : "text-gray-600 bg-gray-200"
                   } inline-block`}
                 >
                   {card.isFilled ? "Completado" : "Pendiente"}
                 </p>
               </div>
-              <FaCheckCircle className={`text-xl ${card.isFilled ? "text-blue-500" : "text-gray-400"}`} />
+              <FaCheckCircle className={`text-xl ${card.isFilled ? "text-primary-20" : "text-gray-400"}`} />
             </div>
           ))}
         </div>

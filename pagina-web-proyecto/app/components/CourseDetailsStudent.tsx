@@ -103,7 +103,7 @@ const ProgressBadge = ({ value }: { value: number }) => {
   }
   if (value === 1) {
     return (
-      <p className="text-sm px-2 py-1 rounded text-green-700 bg-green-100 inline-block">
+      <p className="text-sm px-2 py-1 rounded text-primary-40 bg-primary-60 inline-block">
         Completado
       </p>
     );
@@ -358,7 +358,7 @@ const CourseDetailsStudent = ({
             </p>
             <button
               onClick={() => setModalOpen(false)}
-              className="px-4 py-2 rounded-lg bg-primary-40 text-white hover:bg-primary-60 text-sm sm:text-base w-full sm:w-auto"
+              className="px-4 py-2 rounded-lg bg-primary-40 text-white hover:bg-primary-50 text-sm sm:text-base w-full sm:w-auto"
             >
               Entendido
             </button>

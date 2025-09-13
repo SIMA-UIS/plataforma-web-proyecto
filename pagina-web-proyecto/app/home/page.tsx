@@ -26,6 +26,9 @@ import {
   FaCog,
 } from "react-icons/fa";
 
+import Image from "next/image";
+import logo from "./sublogo.png";
+
 // Tipos mínimos (ajústalos a tu backend si lo deseas)
 interface Course {
   courseId: string;
@@ -208,25 +211,43 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-primary-40 text-white p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">EduLMS</h1>
+      <header className="bg-white/100 text-primary-40 p-4 flex justify-between items-center border-b border-gray/10">
+        {/* Logo + Nombre */}
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-auto translate-y-[-8px]">
+            <Image
+              src={logo}
+              alt="SIMA Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-xl font-bold h-8 flex items-center translate-y-[3px]">
+            SIMA
+          </h1>
+        </div>
+
+        {/* Acciones */}
         <div className="flex items-center space-x-4">
-          <button className="p-2 hover:bg-primary-30 rounded-full">
+          <button className="p-2">
             <FaBell className="text-xl" />
           </button>
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center hover:bg-primary-30 cursor-pointer">
-            <FaUser className="text-xl text-gray-700" />
+          <div className="w-10 h-10 bg-primary-60 rounded-full flex items-center justify-center cursor-pointer">
+            <FaUser className="text-xl text-primary-40" />
           </div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded hidden sm:block"
+            className="hidden sm:block px-4 py-2 border border-primary-40 bg-white hover:bg-primary-40 hover:text-white transition-colors duration-300 rounded-md"
           >
             Cerrar Sesión
           </button>
         </div>
+
+        {/* Botón menú mobile */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="block sm:hidden px-4 py-2 text-white"
+          className="block sm:hidden px-4 py-2 text-primary-40"
         >
           {isSidebarOpen ? (
             <FaTimes className="text-2xl" />
@@ -292,7 +313,7 @@ const Dashboard = () => {
           <div className="mt-4 sm:hidden">
             <button
               onClick={handleLogout}
-              className="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+              className="w-full px-4 py-2 border border-primary-40 bg-white text-primary-40 hover:bg-primary-40 hover:text-white transition-colors duration-300 rounded-md"
             >
               Cerrar Sesión
             </button>
@@ -309,9 +330,9 @@ const Dashboard = () => {
             !showReuse && // 👈 añade esto
             hasMounted && (
               <h2 className="text-2xl font-bold mb-4">
-                {isTeacher && "¡Hola, profesor!"}
-                {isStudent && "¡Hola, estudiante!"}
-                {isAdmin && "¡Hola, administrador!"}
+                {isTeacher && "¡Bienvenido, profesor!"}
+                {isStudent && "¡Bienvenido, estudiante!"}
+                {isAdmin && "¡Bienvenido, administrador!"}
               </h2>
             )}
 
