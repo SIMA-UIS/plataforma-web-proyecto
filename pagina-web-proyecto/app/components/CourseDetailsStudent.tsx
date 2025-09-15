@@ -255,11 +255,11 @@ const CourseDetailsStudent = ({
 
             // ====== Lock logic ======
             let isLocked = false;
-            if (title === "Aula Invertida") {
+            if (title === "Taller de Habilidad") {
               const prebriefingDone =
                 progress && getProgressPercentage(progress.aulaInvertida) === 1;
               isLocked = !prebriefingDone;
-            } else if (title === "Taller de Habilidad") {
+            } else if (title === "Experiencia de Alta Fidelidad") {
               const briefingDone =
                 progress && getProgressPercentage(progress.tallerHabilidad) === 1;
               isLocked = !briefingDone;
