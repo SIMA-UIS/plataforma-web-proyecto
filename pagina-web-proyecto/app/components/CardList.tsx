@@ -75,6 +75,12 @@ export default function CardList({
     },
   ];
 
+  if (name === "beforeClass") {
+    const temp = cards[1];
+    cards[1] = cards[0];
+    cards[0] = temp;
+  }
+
   const handleSave = async () => {
     try {
       const token = Cookies.get("token");
@@ -196,6 +202,7 @@ export default function CardList({
               handleInputChange={handleInputChange}
               name={name}
               hasSimulation={course.isPublic}
+              activeCardId={activeCardId}
             />
           ) : activeCardId === 2 && name === "afterClass" ? (
             <CrearExperiencia courseData={courseData} setCourseData={setCourseData} hasSimulation={course.isPublic} />
