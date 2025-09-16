@@ -96,7 +96,7 @@ const ActivityStudent: React.FC<ActivityStudentProps> = ({
   return (
     <div
       onClick={onClick}
-      className="bg-white border border-gray-300/10 shadow-md rounded-lg overflow-hidden w-full max-w-sm transition-shadow hover:shadow-lg cursor-pointer"
+      className="bg-white border border-gray-500/10 shadow-md rounded-lg overflow-hidden w-full max-w-sm transition-shadow hover:shadow-lg cursor-pointer"
     >
       <div
         className="h-48 bg-cover bg-center"
