@@ -54,7 +54,7 @@ const Activity = ({
   }, [image]);
 
   return (
-    <div className="bg-white border border-gray-500/10 rounded-lg overflow-hidden w-full max-w-sm">
+    <div className="bg-white border border-gray-600/10 rounded-lg overflow-hidden w-full max-w-sm">
       {/* Imagen */}
       <div
         className="h-48 bg-cover bg-center"
