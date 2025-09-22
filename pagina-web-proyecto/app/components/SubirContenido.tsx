@@ -454,7 +454,7 @@ export default function SubirContenido({
                               // Docs → styled card
                               return (
                                 <div className="w-full max-w-xs bg-primary-98 rounded-xl border border-gray-200 px-6 py-5 shadow-sm">
-                                  <h4 className="text-base font-medium text-primary-10 mb-2 text-center">
+                                  <h4 className="text-base font-medium mb-2 text-center">
                                     {c.contentTitle || "Sin título"}
                                   </h4>
                                   <a

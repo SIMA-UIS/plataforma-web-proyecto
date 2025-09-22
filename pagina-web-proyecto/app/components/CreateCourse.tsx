@@ -155,6 +155,37 @@ export default function CreateCourse({ onCancel, onComplete }: CreateCourseProps
       //alert("Error creando curso: " + err);
       //console.error(err);
     }
+
+    notifyTeachers();
+  };
+
+  const notifyTeachers = async () => {
+    const token = Cookies.get("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/emails/notify-teachers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          courseName, // from state
+          recipients: professors.map((p) => p.username), // usernames of selected teachers
+        }),
+      });
+
+      if (!response.ok) {
+        //const errorText = await response.text();
+        //throw new Error(`Error enviando notificación: ${errorText}`);
+      }
+
+      const result = await response.text();
+      //console.log("Notificación enviada a profesores:", result);
+    } catch (error) {
+      //console.error("Error en notifyTeachers:", error);
+    }
   };
 
   const confirmRemoveUser = () => {

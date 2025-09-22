@@ -261,6 +261,38 @@ const Wizard = ({ course, onComplete, onCancel }: WizardProps) => {
 
   const handleSubmit = () => {
     onComplete(courseData);
+    notifyStudents();
+  };
+
+  // new function for notifications
+  const notifyStudents = async () => {
+    try {
+      const token = Cookies.get("token");
+      if (!token) return;
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/emails/notify-students`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          courseName: courseData.courseName,
+          recipients: courseData.studentIds,
+        }),
+      });
+
+      if (!response.ok) {
+        //const errorText = await response.text();
+        //throw new Error(`Error enviando notificación: ${errorText}`);
+      }
+
+      //const result = await response.text();
+      //console.log("Notificación enviada a estudiantes:", result);
+    } catch (error) {
+      //console.error("Error en notifyStudents:", error);
+      //alert(error instanceof Error ? error.message : "Error inesperado");
+    }
   };
 
   const handleCardClick = (id: number) => {
