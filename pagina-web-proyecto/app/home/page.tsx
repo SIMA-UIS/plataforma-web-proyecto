@@ -298,6 +298,7 @@ const Dashboard = () => {
                       setShowEditCourse(false);
                       setShowWizard(false);
                       setShowFeedback(false);
+                      setIsSidebarOpen(false);
                     }}
                   >
                     <FaUser className="text-primary-40 text-xl mr-2" />
