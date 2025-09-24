@@ -38,14 +38,14 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
   const fetchUsuarios = async () => {
     const token = Cookies.get("token");
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error(await res.text());
       const data: Usuario[] = await res.json();
       setUsuarios(data.filter((u) => u.role !== "ADMIN"));
     } catch (err) {
-        //console.error("Error al obtener usuarios:", err);
+      //console.error("Error al obtener usuarios:", err);
     }
   };
 
@@ -169,7 +169,7 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
   };
 
   return (
-    <div className="bg-white p-4 sm:p-6 max-w-6xl mx-auto w-full">
+    <div className="bg-white p-4 sm:p-6 w-full">
       {/* Back button */}
       <button
         onClick={onBack}
@@ -194,32 +194,22 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
         />
         <button
           onClick={handleAdd}
-          className="px-4 py-2 bg-primary-40 text-white rounded hover:bg-primary-50 flex items-center justify-center gap-2"
+          className="w-full sm:w-auto px-4 py-2 bg-primary-40 text-white rounded hover:bg-primary-50 flex items-center justify-center gap-2"
         >
           <span className="text-xl">+</span> Agregar usuario
         </button>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto shadow rounded">
-        <table className="min-w-full border-collapse text-sm sm:text-base">
+      <div className="overflow-x-auto shadow rounded w-full">
+        <table className="table-auto w-full border-collapse text-sm sm:text-base">
           <thead className="bg-gray-50">
             <tr>
-              <th className="p-3 text-left font-semibold text-gray-600 border-b">
-                NOMBRE
-              </th>
-              <th className="p-3 text-left font-semibold text-gray-600 border-b">
-                APELLIDO
-              </th>
-              <th className="p-3 text-left font-semibold text-gray-600 border-b">
-                USUARIO
-              </th>
-              <th className="p-3 text-left font-semibold text-gray-600 border-b">
-                ROL
-              </th>
-              <th className="p-3 text-center font-semibold text-gray-600 border-b">
-                ACCIONES
-              </th>
+              <th className="p-3 text-left font-semibold text-gray-600 border-b">NOMBRE</th>
+              <th className="p-3 text-left font-semibold text-gray-600 border-b">APELLIDO</th>
+              <th className="p-3 text-left font-semibold text-gray-600 border-b">USUARIO</th>
+              <th className="p-3 text-left font-semibold text-gray-600 border-b">ROL</th>
+              <th className="p-3 text-center font-semibold text-gray-600 border-b">ACCIONES</th>
             </tr>
           </thead>
           <tbody>
@@ -235,17 +225,11 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
                 </td>
                 <td className="p-3 border-b text-center">
                   <div className="flex justify-center gap-4 text-gray-600">
-                    <button
-                      onClick={() => handleEdit(u)}
-                      className="hover:text-primary-40"
-                    >
+                    <button onClick={() => handleEdit(u)} className="hover:text-primary-40">
                       <FaPencilAlt />
                     </button>
                     <button
-                      onClick={() => {
-                        setUserToDelete(u);
-                        setShowDeleteModal(true);
-                      }}
+                      onClick={() => { setUserToDelete(u); setShowDeleteModal(true); }}
                       className="hover:text-red-500"
                     >
                       <FaTrash />
@@ -273,58 +257,21 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
             </h3>
 
             <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                className="border rounded p-3 w-full"
-              />
-              <input
-                type="text"
-                placeholder="Apellido"
-                value={apellido}
-                onChange={(e) => setApellido(e.target.value)}
-                className="border rounded p-3 w-full"
-              />
-              <input
-                type="text"
-                placeholder="Usuario (correo)"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="border rounded p-3 w-full"
-                disabled={isEditing}
-              />
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="border rounded p-3 w-full"
-              >
+              <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="border rounded p-3 w-full" />
+              <input type="text" placeholder="Apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} className="border rounded p-3 w-full" />
+              <input type="text" placeholder="Usuario (correo)" value={username} onChange={(e) => setUsername(e.target.value)} className="border rounded p-3 w-full" disabled={isEditing} />
+              <select value={role} onChange={(e) => setRole(e.target.value)} className="border rounded p-3 w-full">
                 <option value="TEACHER">Profesor</option>
                 <option value="STUDENT">Estudiante</option>
               </select>
-              <input
-                type="password"
-                placeholder={
-                  isEditing ? "Nueva contraseña (Opcional)" : "Contraseña"
-                }
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border rounded p-3 w-full"
-              />
+              <input type="password" placeholder={isEditing ? "Nueva contraseña (Opcional)" : "Contraseña"} value={password} onChange={(e) => setPassword(e.target.value)} className="border rounded p-3 w-full" />
             </div>
 
-            <div className="flex justify-end gap-4 mt-6">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100"
-              >
+            <div className="flex flex-col sm:flex-row justify-end gap-4 mt-6">
+              <button onClick={() => setShowModal(false)} className="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100 w-full sm:w-auto">
                 Cancelar
               </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-primary-40 text-white rounded hover:bg-primary-50"
-              >
+              <button onClick={handleSave} className="px-4 py-2 bg-primary-40 text-white rounded hover:bg-primary-50 w-full sm:w-auto">
                 Guardar
               </button>
             </div>
@@ -338,20 +285,13 @@ export default function ConfigView({ onBack }: ConfigViewProps) {
           <div className="bg-white rounded-lg p-6 w-11/12 sm:w-96 shadow relative text-center">
             <h3 className="text-xl font-bold mb-4">Eliminar usuario</h3>
             <p className="mb-6">
-              ¿Está seguro que desea eliminar al usuario{" "}
-              <span className="font-semibold">{userToDelete.username}</span>?
+              ¿Está seguro que desea eliminar al usuario <span className="font-semibold">{userToDelete.username}</span>?
             </p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100"
-              >
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <button onClick={() => setShowDeleteModal(false)} className="px-4 py-2 border rounded text-gray-700 hover:bg-gray-100 w-full sm:w-auto">
                 Cancelar
               </button>
-              <button
-                onClick={handleDelete}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
+              <button onClick={handleDelete} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full sm:w-auto">
                 Eliminar
               </button>
             </div>
